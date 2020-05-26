@@ -38,12 +38,12 @@ module.exports = mongoose.model('Class', ClassSchema); // then this export the m
 
 
 // To fetch All Classes in the collection classes in our DB
-module.exports.getClasses = function(callback, limit){
-    Class.find(callback).limit(limit);
+module.exports.getClasses = function(foundclasses, limit){
+    Class.find(foundclasses).limit(limit);
 };
 
 // To fatch just a Class in the collection classes in our DB
-module.exports.getClass = function(id, callback){
+module.exports.getClassById = function(id, callback){
     Class.findById(id, callback);
 };
 

@@ -26,9 +26,9 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', handler({
-  defaultLayout: 'Layout',
+  defaultLayout: 'layout',
   extname: '.hbs',
-  layoutsDir: path.join(__dirname, 'views')})); // this is to set the default Layout to be a file name layout in the views folder
+  layoutsDir: path.join(__dirname, 'views/layout')})); // this is to set the default Layout to be a file name layout in the views folder
 app.set('view engine', '.hbs');
 
 app.use(logger('dev'));
@@ -81,12 +81,15 @@ app.use(require('connect-flash')());
 // giving a global var so that when we get a message its saved in messages which can be access 
 app.use(function (req, res, next) {
   res.locals.messages = require('express-message')(req, res);
+  if (req.url == '/') {
+    res.locals.isHome = true;
+  }
   next();
 });
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/clases', classes);
+app.use('/classes', classes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

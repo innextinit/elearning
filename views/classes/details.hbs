@@ -1,0 +1,30 @@
+<div class="col-md-6 animate-box">
+					<div class="course">
+						<a href="#" class="course-img" style="background-image: url(images/project-1.jpg){{class.classImg.data}};">
+						</a>
+						<div class="desc">
+							<h3><a href="#">{{class.title}}</a></h3>
+                            <p>Instructor : <a href="/teacher/:{{id_teacher}}/details">{{class.teacher}}</a></p>
+							<p>{{class.description}}</p>
+                            <ul class="alt">
+                                {{#each class.lessons}}
+                                    <li>{{lesson_title}}</li>
+                                {{/each}}
+                            </ul>
+
+                            <ul>
+                                {{#if user}}
+                                    <form action="/students/classes/register" method="POST" id="classRegForm">
+                                        <input type="hidden" name="student_id" value="{{user._id}}">
+                                        <input type="hidden" name="class_id" value="{{class._id}}">
+                                        <input type="hidden" name="class_title" value="{{class.title}}">
+                                        <input type="submit" name="button" value="Register For This Class">
+                                    </form>
+                                {{else}}
+                                    <p><em>Please Login</em></p>
+                                {{/if}}
+                            </ul>
+							
+						</div>
+					</div>
+				</div>
