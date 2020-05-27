@@ -12,7 +12,7 @@ var localStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var fs = require('fs');
-var multer = require('multer');
+var multer = require("multer");
 mongoose.connect('MongoDB://localhost/Elearn');
 var db =mongoose.connection;
  
