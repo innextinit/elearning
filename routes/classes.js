@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-Class = require('../models/class'); // we importing the Class model so we can exproted models
+const Class = require('../models/class'); // we importing the Class model so we can exproted models
 
 router.get('/', function(req, res) {
   Class.getClasses(function(err, foundclasses){
