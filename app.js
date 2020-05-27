@@ -27,7 +27,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.engine('handlebars', handlebars({
-  layoutsDir: __dirname + 'views/layouts',
+  layoutsDir: __dirname + 'views/layout',
   extname: 'hbs'
 }));
 
