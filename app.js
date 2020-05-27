@@ -12,7 +12,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var fs = require('fs');
 var multer = require('multer');
-mongoose.connect('mongodb://localhost/Elearn', { useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/Elearn', { useNewUrlParser: true, useUnifiedTopology: true});
 var db =mongoose.connection;
 const handlebars = require('express-handlebars')
  
@@ -27,7 +27,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.engine('handlebars', handlebars({
-  layoutsDir: __dirname + 'views/layout',
+  layoutsDir: __dirname + 'views/layouts',
   extname: 'hbs'
 }));
 
