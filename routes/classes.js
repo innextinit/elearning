@@ -9,9 +9,8 @@ router.get('/', function(req, res) {
       console.log(err);
       res.send(err);
     } else {
-      res.render('classes/index', { classes: foundclasses });
+      res.render('classes/index', { classes: foundclasses.map(fc => fc.toJSON()) });
     }
-    console.log(foundclasses)
   }, 5); // the 5 here is the limit which is optional
 });
 

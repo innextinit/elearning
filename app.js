@@ -13,7 +13,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var fs = require('fs');
 var multer = require('multer');
-mongoose.connect('MongoDB://localhost/Elearn');
+mongoose.connect('mongodb://localhost:27017/Elearn', { useNewUrlParser: true, useUnifiedTopology: true});
 var db =mongoose.connection;
  
 
