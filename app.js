@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var handler = require('express-handlebars');
 const {check, validationResult} = require('express-validator/check');
 var flash = require('connect-flash');
 var session = require('express-session');
@@ -12,9 +13,8 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var fs = require('fs');
 var multer = require('multer');
-mongoose.connect('mongodb://localhost:27017/Elearn', { useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/Elearn', { useNewUrlParser: true, useUnifiedTopology: true });
 var db =mongoose.connection;
-const handlebars = require('express-handlebars')
  
 
 var indexRouter = require('./routes/index');
@@ -25,11 +25,11 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-app.engine('handlebars', handlebars({
-  layoutsDir: __dirname + 'views/layouts',
-  extname: 'hbs'
-}));
+app.engine('.hbs', handler({
+  defaultLayout: 'layout',
+  extname: '.hbs',
+  layoutsDir: path.join(__dirname, 'views/layout')})); // this is to set the default Layout to be a file name layout in the views folder
+app.set('view engine', '.hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
