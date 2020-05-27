@@ -11,14 +11,10 @@ var localStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var fs = require('fs');
-<<<<<<< HEAD
-var multer = require("multer");
-mongoose.connect('MongoDB://localhost/Elearn');
-=======
 var multer = require('multer');
-mongoose.connect('mongodb://localhost:27017/Elearn', { useNewUrlParser: true, useUnifiedTopology: true});
->>>>>>> 4e34d2f8e0cb6f907e2f6029cc58bffe584c1928
+mongoose.connect('mongodb://localhost/Elearn', { useNewUrlParser: true, useUnifiedTopology: true});
 var db =mongoose.connection;
+const handlebars = require('express-handlebars')
  
 
 var indexRouter = require('./routes/index');
@@ -29,7 +25,11 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'hbs');
+app.engine('handlebars', handlebars({
+  layoutsDir: __dirname + 'views/layouts',
+  extname: 'hbs'
+}));
 
 app.use(logger('dev'));
 app.use(express.json());
