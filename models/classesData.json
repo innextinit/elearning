@@ -1,40 +1,42 @@
 {
-        "title" : "Business",
-        "description" : "Dignissimos asperiosamus alias autem provident. Odit ab aliquamident. Odit ab aliquam dolor eius.",
-        "teacher" : "Kola Inioluwa",
-        "lessons" : {
-                "lesson_number" : 12,
-                "lesson_title" : "Test Title",
-                "lesson_body" : "Dignissimos"
-        }
-},
-{
-        "title" : "Business & Accountin",
-        "description" : "Dignissimos asperiosamus alias autem provident. Odit ab aliquamident. Odit ab aliquam dolor eius.",
-        "teacher" : "Kola-Adelakin Inioluwa"
-        "lessons" : {
-                "lesson_number" : 12,
-                "lesson_title" : "Test Title",
-                "lesson_body" : "Dignissimos"
-        }
-},
-{
-        "title" : "Business & Accountin",
-        "description" : "Dignissimos asperiosamus alias autem provident. Odit ab aliquamident. Odit ab aliquam dolor eius.",
-        "teacher" : "Inioluwa",
-        "lessons" : {
-                "lesson_number" : 12,
-                "lesson_title" : "Test Title",
-                "lesson_body" : "Dignissimos"
-        }
-},
-{
-        "title" : "Business & Accountin",
-        "description" : "Dignissimos asperioautem provident. Odit ab aliquam eius molestautem provident. Odit ab aliquam dolor eius.",
-        "teacher" : "Innext",
-        "lessons" : {
-                "lesson_number" : 12,
-                "lesson_title" : "Test Title for Lesson",
-                "lesson_body" : "Dignissimos as"
-        }
+  "0": {
+    "title": "Business & Accountin",
+    "description": "Dignissimos asperiosamus alias autem provident. Odit ab aliquamident. Odit ab aliquam dolor eius.",
+    "teacher": "Kola-Adelakin Inioluwa",
+    "lessons": {
+      "lesson_number": 12,
+      "lesson_title": "Test Title",
+      "lesson_body": "Dignissimos"
+    }
+  },
+  "1": {
+    "title": "Business & Accountin",
+    "description": "Dignissimos asperiosamus alias autem provident. Odit ab aliquamident. Odit ab aliquam dolor eius.",
+    "teacher": "Kola-Adelakin Inioluwa",
+    "lessons": {
+      "lesson_number": 12,
+      "lesson_title": "Test Title",
+      "lesson_body": "Dignissimos"
+    }
+  },
+  "2": {
+    "title": "Business & Accountin",
+    "description": "Dignissimos asperiosamus alias autem provident. Odit ab aliquamident. Odit ab aliquam dolor eius.",
+    "teacher": "Inioluwa",
+    "lessons": {
+      "lesson_number": 12,
+      "lesson_title": "Test Title",
+      "lesson_body": "Dignissimos"
+    }
+  },
+  "3": {
+    "title": "Business & Accountin",
+    "description": "Dignissimos asperioautem provident. Odit ab aliquam eius molestautem provident. Odit ab aliquam dolor eius.",
+    "teacher": "Innext",
+    "lessons": {
+      "lesson_number": 12,
+      "lesson_title": "Test Title for Lesson",
+      "lesson_body": "Dignissimos as"
+    }
+  }
 }
