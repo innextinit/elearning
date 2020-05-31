@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+{{!-- start of header --}}
+{{>header}}
+{{!-- end of header --}}
+	<body>
+		
+	<div class="fh5co-loader"></div>
+	
+	<div id="page">
+		{{!-- this is the start of nav bar --}}
+	<nav class="fh5co-nav" role="navigation">
+		<div class="top-menu">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-2">
+						<div id="fh5co-logo"><img src="images/logo.png" width="80px", height="48px"></a></div>
+					</div>
+					<div class="col-xs-10 text-right menu-1">
+						<ul>
+							<li class="active"><a href="/">Home</a></li>
+							<li><a href="/classes">Classes</a></li>
+							<li><a href="pricing.hbs">Pricing</a></li>
+							<li><a href="teacher.hbs">Teacher</a></li>
+							<li class="btn-cta"><a href="/users/login"><span>Login</span></a></li>
+							<li class="btn-cta"><a href="#"><span>Create a Course</span></a></li> {{!-- This show show from teachers only--}}
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</nav> 
+	{{!--  end of nav bar --}}
+	
+		{{!--  this is the slider bar part --}}
+		{{>index}}
+	{{!--  end of slider bar --}}
+
+		{{!--  this is the start of Course Categories --}}
+		{{>categories}}
+	{{!--  end of Course Categories --}}
+		{{!-- this is start of some stand Along Course --}}
+		{{>classes}}
+	{{!-- end of some stand Along Course --}}
+
+		{{!-- this is the start of total number of students, teacher, and classes that we have --}}
+		{{>withUs}}  
+	{{!--  total number of students, teacher, and classes that we have --}}
+
+
+		{{!-- Start for the pricing  --}}
+		{{>pricing}}
+	{{!-- End for the pricing --}}
+	
+		{{!-- Call to register --}}
+		{{>callToRegister}}
+	{{!-- End of register --}}
+	
+
+
+		{{!-- Footer --}}
+		{{>footer}}
+	{{!-- ebd of footer --}}
+	</body>
+</html>

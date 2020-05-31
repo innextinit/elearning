@@ -18,18 +18,18 @@ var db =mongoose.connection;
  
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var classes = require('./routes/classes');
+// var usersRouter = require('./routes/users');
+// var classes = require('./routes/classes');
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.engine('.hbs', handler({
+app.engine('hbs', handler({
   defaultLayout: 'layout',
-  extname: '.hbs',
-  layoutsDir: path.join(__dirname, 'views/layout')})); // this is to set the default Layout to be a file name layout in the views folder
-app.set('view engine', '.hbs');
+  extname: 'hbs',
+ })); // this is to set the default Layout to be a file name layout in the views folder
+app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -88,8 +88,8 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/classes', classes);
+// app.use('/users', usersRouter);
+// app.use('/classes', classes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
