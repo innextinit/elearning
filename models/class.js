@@ -8,12 +8,13 @@ var ClassSchema = new mongoose.Schema({
     type: String,
     index: true,
     trim: true,
-    required: true,
+    require: true,
+    unique: true
   },
   description: {
     type: String,
     trim: true,
-    required: true,
+    require: true,
   },
   classImg: {
     data: Buffer, // using Buffer, which allows us to store our image as data in the form of arrays
@@ -21,7 +22,7 @@ var ClassSchema = new mongoose.Schema({
   },
   teacher: {
     type: String,
-    required: true,
+    require: true,
     trim: true,
   },
   lessons: {
@@ -38,12 +39,26 @@ module.exports = mongoose.model("Class", ClassSchema); // then this export the m
 
 // To fetch All Classes in the collection classes in our DB
 module.exports.getClasses = function (foundclasses, limit) {
-  Class.find(foundclasses).limit(limit);
+  Class.find(foundclasses).lean().limit(limit);
 };
 
 // To fatch just a Class in the collection classes in our DB
 module.exports.getClassById = function (id, callback) {
-  Class.findById(id, callback);
+  Class.findById(id, callback).lean();
+};
+
+module.exports.getLesson = function(newlesson, callback){
+  class_id = newlesson.class_id;
+  lesson_number = newlesson.lesson_number;
+  lesson_title = newlesson.lesson_title;
+  lesson_body = newlesson.lesson_body;
+
+  Class.findByIdAndUpdate(
+    class_id,
+    {$push: {"lessons": {lesson_number:lesson_number, lesson_title:lesson_title, lesson_body:lesson_body}}},
+    {save: true, upsert: true},
+    callback
+  );
 };
 
 // this is for when i am sending POST req to add new class to inculde this part for the classImg upload that is include.

@@ -1,41 +1,74 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
+var fs = require("fs");
+var multer = require("multer");
+var bcryptjs = require('bcryptjs');
 
 // Student Schema (this is the definition of the input the DB will take more like stating the head of table)
 var StudentSchema = new mongoose.Schema({
-    username : {
-        type: String,
-        minlength: 3,
-        maxlength: 14,
-        index: {unique: true},
-        trim: true,
-        require: true
-    },
-    email : {
-        type: String,
-        require: true,
-        minlength: 11,
-        maxlength: 35,
-        trim: true,
-        index: {unique: true}
-    },
-    addrress: [{
-        street_address: {type: String},
-        city: {type: String},
-        state: {type: String},
-        zip: {type: String}
-    }],
-    classes : [{
-        class_id: {type: [mongoose.Schema.Types.ObjectId]},
-        class_title: {type: String}
-    }],
-    ipAddress : {
-        type: Object,
-        require: true
-    },
-    admin: false,
-    active: false
+    name: {
+    type: String,
+    index: true,
+    trim: true,
+    require: true,
+  },
+  address: [{
+    street_address: {type: String, trim: true, require: true},
+    city: {type: String, trim: true, require: true},
+    state: {type: String, trim: true, require: true},
+    zip: {type: Number, trim: true, require: true}
+  }],
+  username: {
+    type: String,
+    index: true,
+    trim: true,
+    require: true,
+    unique: true
+  },
+  email: {
+    type: String,
+    trim: true,
+    require: true,
+    unique: true
+  },
+  StudentImg: {
+    data: Buffer, // using Buffer, which allows us to store our image as data in the form of arrays
+    contentType: String,
+  },
+  classes: [{
+    class_id:{type: [mongoose.Schema.Types.ObjectId]},
+    class_title:{type: String}
+  }],
+  admin: false,
 });
 
-// this is to convert this StudentSchema in a usable model called Student
-var Student = mongoose.model('Student', StudentSchema);
-module.exports = mongoose.model('Student', StudentSchema); // then this export the model Student so it can be used outside this file.
+var Student = mongoose.model("Student", StudentSchema);
+module.exports = mongoose.model("Student", StudentSchema);
+
+module.exports.getStudentByUsername = function(req, res, next) {
+  var query = {username: username};
+  Student.findOne(query, callback).lean();
+};
+
+// newClass
+module.exports.saveNewClass = function(newClass, callback){
+  student_username = newClass.student_username;
+  class_id = newClass.class_id;
+  class_title = newClass.class_title;
+
+  var query = {username: student_username}
+  Student.findOneAndUpdate(
+    query,
+    {$push: {"classes": {class_id: class_id, class_title: class_title}}},
+    {save: true, upsert: true},
+    callback
+  ).lean();
+};
+
+// this is for when i am sending POST req to add new class to inculde this part for the classImg upload that is include.
+
+// app.post('/api/photo', function(req, res){
+//     var newClass = new Class();
+//     newClass.classImg.data = fs.readFileSync(req.files.userPhoto.path);
+//     newClass.classImg.contentType = 'image/png';
+//     newClass.save();
+// });

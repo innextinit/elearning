@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+		{{>header}}
+	<body>
+		
+	<div class="fh5co-loader"></div>
+	
+	<div id="page">
+		{{!-- this is the start of nav bar --}}
+		{{>navbar}}
+	{{!--  end of nav bar --}}
+
+        <h2>Add Lesson</h2>
+        <form action="/teachers/classes/{{class_id}}/lessons/new" method="POST", id="regForm">
+            <div>
+                <label for="lesson_number">Lesson Number</label>
+                <input type="number" name="lesson_number" placeholder="Enter Lesson Number" minlength="1" max="3" autofocus>
+            </div>
+
+            <div>
+                <label for="lesson_title">Lesson Title</label>
+                <input type="text" name="lesson_title" placeholder="Enter Lesson Title" minlength="1" max="3">
+            </div>
+
+            <div>
+                <label for="lesson_body">Lesson Body</label>
+                <textarea name="lesson_body" id="lesson_body" cols="50" rows="30" minlength="200" maxlength="10000"></textarea>
+            </div>
+
+            <div>
+                <input type="submit" value="Add Lesson">
+            </div>
+
+        </form>
+        
+		{{>footer}}
+	</body>
+</html>

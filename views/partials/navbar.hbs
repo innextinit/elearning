@@ -1,0 +1,34 @@
+	<nav class="fh5co-nav" role="navigation">
+		<div class="top-menu">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-2">
+						<div id="fh5co-logo"><img src="images/logo.png" width="80px", height="48px"></a></div>
+					</div>
+
+						{{#if user}}
+							<h3>Welcome back, {{user.username}}</h3>
+							<div class="col-xs-10 text-right menu-1">
+								<ul>
+									<li class="active"><a href="/">Home</a></li>
+									<li><a href='/{{user.type}}s/classes'>My Classes</a></li>
+									<li><a href="/{{_id}}/wishlist">Wishlist</a></li>
+									<li class="btn-cta"><a href="/users/logout"><span>Logout</span></a></li>
+									{{!-- <li class="btn-cta"><a href="#"><span>Create a Course</span></a></li> This show show from teachers only --}}
+								</ul>
+							</div>
+						{{else}}
+							<div class="col-xs-10 text-right menu-1">
+								<ul>									<li class="active"><a href="/">Home</a></li>
+									<li><a href="/classes">Classes</a></li>
+									<li><a href="pricing.hbs">Pricing</a></li>
+									<li><a href="teacher.hbs">Teacher</a></li>
+									<li class="btn-cta"><a href="/users/login"><span>Login</span></a></li>
+								</ul>
+							</div>
+						{{/if}}
+				</div>
+				
+			</div>
+		</div>
+	</nav> 

@@ -1,71 +1,48 @@
 <!DOCTYPE HTML>
-    <html>
-        {{!-- start of header --}}
-    {{>header}}
-        {{!-- end of header --}}
-        <body>
-            
-        <div class="fh5co-loader"></div>
-        
-        <div id="page">
-            {{!-- this is the start of nav bar --}}
-        <nav class="fh5co-nav" role="navigation">
-            <div class="top-menu">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-2">
-                            <div id="fh5co-logo"><img src="images/logo.png" width="80px", height="48px"></a></div>
-                        </div>
-                        <div class="col-xs-10 text-right menu-1">
-                            <ul>
-                                <li class="active"><a href="/">Home</a></li>
-                                <li><a href="/classes">Classes</a></li>
-                                <li><a href="pricing.hbs">Pricing</a></li>
-                                <li><a href="teacher.hbs">Teacher</a></li>
-                                <li class="btn-cta"><a href="/users/login"><span>Login</span></a></li>
-                                <li class="btn-cta"><a href="#"><span>Create a Course</span></a></li> {{!-- This show show from teachers only--}}
+<html>
+		{{>header}}
+	<body>
+		
+	<div class="fh5co-loader"></div>
+	
+	<div id="page">
+		{{!-- this is the start of nav bar --}}
+		{{>navbar}}
+	{{!--  end of nav bar --}}
+
+
+<div class="col-md-6 animate-box">
+					<div class="course">
+						<a href="#" class="course-img" style="background-image: url(images/project-1.jpg){{class.classImg.data}};">
+						</a>
+						<div class="desc">
+							<h3><a href="#">{{class.title}}</a></h3>
+                            <p>Instructor : <a href="/teacher/:{{id_teacher}}/details">{{class.teacher}}</a></p>
+							<p>{{class.description}}</p>
+                            <ul class="alt">
+                                {{#each class.lessons}}
+                                    <li>{{lesson_title}}</li>
+                                {{/each}}
                             </ul>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-        </nav> 
-        {{!--  end of nav bar --}}
-        
-        <div class="col-md-6 animate-box">
-            <div class="course">
-                 <a href="#" class="course-img" style="background-image: url(images/project-1.jpg){{class.classImg.data}};">
-                 </a>
-                    <div class="desc">
-                        <h3><a href="#">{{oneclass.title}}</a></h3>
-                        <p>Instructor : <a href="/teacher/{{id_teacher}}/details">{{oneclass.teacher}}</a></p>
-                        <p>{{oneclass.description}}</p>
-                        <ul class="alt">
-                            {{#each oneclass.lesson}}
-                                <li>{{lesson_title}}</li>
-                            {{/each}}
-                        </ul>
 
-                        <ul>
-                            {{!-- {{#if user --}}
-                                <form action="/students/classes/register" method="POST" id="classRegForm">
-                                    <input type="hidden" name="student_id" value="{{user._id}}">
-                                    <input type="hidden" name="class_id" value="{{class._id}}">
-                                    <input type="hidden" name="class_title" value="{{class.title}}">
-                                    <input type="submit" name="button" value="Register For This Class">
-                                </form>
-                            {{!-- {{else --}}
-                                <p><em>Please Login</em></p>
-                            {{!-- {{/if --}}
-                        </ul>
-                                
-                    </div>
-            </div>
-        </div>
+                            <ul>
+                                {{#if user}}
+                                    var usertype = req.user.type;
+                                    <form action='/'+usertype+'s/classes/register' method="POST" id="classRegForm">
+                                        <input type="hidden" name="student_username" value="{{user.username}}">
+                                        <input type="hidden" name="class_id" value="{{class._id}}">
+                                        <input type="hidden" name="class_title" value="{{class.title}}">
+                                        <input type="submit" name="button" value="Register For This Class">
+                                    </form>
+                                {{else}}
+                                    <p><em>Please Login</em></p>
+                                {{/if}}
+                            </ul>
+							
+						</div>
+					</div>
+				</div>
 
-        	{{!-- Footer --}}
-	    {{>footer}}
-	{{!-- ebd of footer --}}
+		{{>footer}}
 	</body>
 </html>
