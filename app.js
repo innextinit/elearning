@@ -13,7 +13,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var fs = require('fs');
 var multer = require('multer');
-mongoose.connect('mongodb://localhost:/Elearn', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:/Elearn' || process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 var db =mongoose.connection;
  
 
@@ -120,6 +120,6 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-app.listen(5000, function(){
+app.listen(5000 || process.env.PORT, function(){
   console.log("server running on port 5000");
 });

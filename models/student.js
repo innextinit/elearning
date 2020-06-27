@@ -35,7 +35,7 @@ var StudentSchema = new mongoose.Schema({
     contentType: String,
   },
   classes: [{
-    class_id:{type: [mongoose.Schema.Types.ObjectId]},
+    class_id:{type: [mongoose.Schema.Types.ObjectId], ref: 'Class'},
     class_title:{type: String}
   }],
   admin: false,
