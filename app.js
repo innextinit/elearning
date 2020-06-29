@@ -1,3 +1,5 @@
+var dotenv = require('dotenv');
+dotenv.config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -13,8 +15,8 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var fs = require('fs');
 var multer = require('multer');
-mongoose.connect('mongodb://localhost:/Elearn' || process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
-var db =mongoose.connection;
+var url = process.env.DATABASE_URL || "mongodb://localhost/Elearn";
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
  
 
 var indexRouter = require('./routes/index');
@@ -120,6 +122,8 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-app.listen(5000 || process.env.PORT, function(){
-  console.log("server running on port 5000");
+var port = process.env.PORT || 2000;
+console.log(process.env.PORT)
+app.listen(port, function(){
+  console.log(`server running on port ${port}`);
 });
