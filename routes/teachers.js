@@ -6,14 +6,14 @@ var Teacher = require('../models/teacher');
 
 
 router.get('/classes', ensureAuthenticated, function(req, res){
-    // Teacher.getTeacherByUsername([req.user.username], function(err, teacher){
-    //     if (err) {
-    //         console.log(err);
-    //         res.send(err);
-    //     } else {
+    Teacher.getTeacherByUsername([req.user.username], function(err, teacher){
+        if (err) {
+            console.log(err);
+            res.send(err);
+        } else {
             res.render('teachers/classes', {layout: false} );
-    //     }
-    // });
+        }
+    });
 });
 
 router.post('/classes/register', ensureAuthenticated, function(req, res, next) {

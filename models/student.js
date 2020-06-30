@@ -44,7 +44,7 @@ var StudentSchema = new mongoose.Schema({
 var Student = mongoose.model("Student", StudentSchema);
 module.exports = mongoose.model("Student", StudentSchema);
 
-module.exports.getStudentByUsername = function(req, res, next) {
+module.exports.getStudentByUsername = function(username, callback) {
   var query = {username: username};
   Student.findOne(query, callback).lean();
 };

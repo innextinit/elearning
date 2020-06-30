@@ -26,9 +26,11 @@ var ClassSchema = new mongoose.Schema({
     trim: true,
   },
   lessons: {
-    lesson_number: { type: Number, require: true },
-    lesson_title: { type: String, require: true },
-    lesson_body: { type: String, require: true },
+    section: {
+        lesson_number: { type: Number, require: true },
+        lesson_title: { type: String, require: true },
+        lesson_body: { type: String, require: true },
+    }
   },
   admin: false,
 });
