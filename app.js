@@ -15,7 +15,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var fs = require('fs');
 var multer = require('multer');
-var url = process.env.DATABASE_URL || "mongodb://localhost/Elearn";
+var url = process.env.DATABASE_URL;
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
  
 
@@ -123,7 +123,7 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-var port = process.env.PORT || 2000;
+var port = process.env.PORT;
 console.log(process.env.PORT)
 app.listen(port, function(){
   console.log(`server running on port ${port}`);
