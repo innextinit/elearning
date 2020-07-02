@@ -7,13 +7,14 @@ var Message = require('../models/message');
 router.get('/contact', ensureAuthenticated, function(req, res) {
     res.render('contact', {layout: false});
 });
+
 router.post('/contact', ensureAuthenticated, function(req, res) {
-    var firstname = req.body.firstname;
-    var lastname = req.body.lastname;
-    var email = req.body.email;
-    var subject = req.body.subject;
-    var message = req.body.message;
-    var username = req.body.username;
+    var firstname = req.params.firstname;
+    var lastname = req.params.lastname;
+    var email = req.params.email;
+    var subject = req.params.subject;
+    var message = req.params.message;
+    var username = req.params.username;
 
 // form validation
   check('firstname', 'character allowed is a-z,A-Z')
@@ -85,6 +86,46 @@ router.post('/contact', ensureAuthenticated, function(req, res) {
     req.flash()
 
 })
+
+router.get('/business', function(req, res) {
+  res.render('categories/business', {layout: false});
+});
+
+router.get('/health-psychology', function(req, res) {
+  res.render('categories/health-psychology', {layout: false});
+});
+
+router.get('/accounting', function(req, res) {
+  res.render('categories/accounting', {layout: false});
+});
+
+router.get('/it-software', function(req, res) {
+  res.render('categories/it-software', {layout: false});
+});
+
+router.get('/art-media', function(req, res) {
+  res.render('categories/art-media', {layout: false});
+});
+
+router.get('/office-productivity', function(req, res) {
+  res.render('categories/office-productivity', {layout: false});
+});
+
+router.get('/language-lifestyle', function(req, res) {
+  res.render('categories/language-lifestyle', {layout: false});
+});
+
+router.get('/web-programming', function(req, res) {
+  res.render('categories/web-programming', {layout: false});
+});
+
+router.get('/design', function(req, res) {
+  res.render('categories/design', {layout: false});
+});
+
+router.get('/music', function(req, res) {
+  res.render('categories/music', {layout: false});
+});
 
 function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){

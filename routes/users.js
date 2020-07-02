@@ -172,7 +172,7 @@ router.post('/register', function(req, res, next) {
       });
     } // end of else for type check
     req.flash('success', 'User added.');
-    res.redirect('/');
+    res.redirect('/users/login');
   } // end of else for validation
 }); 
 
