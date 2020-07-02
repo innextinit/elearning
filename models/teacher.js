@@ -45,7 +45,7 @@ var TeacherSchema = new mongoose.Schema({
 var Teacher = mongoose.model("Teacher", TeacherSchema);
 module.exports = mongoose.model("Teacher", TeacherSchema); // then this export the model Teacher so it can be used outside this file.
 
-module.exports.getTeacherByUsername = function(req, res, next) {
+module.exports.getTeacherByUsername = function(username, callback) {
   var query = {username: username};
   Teacher.findOne(query, callback).lean();
 };

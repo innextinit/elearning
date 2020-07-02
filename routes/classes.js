@@ -3,6 +3,7 @@ var router = express.Router();
 
 const Class = require('../models/class'); // we importing the Class model so we can exproted models
 
+// get all classes
 router.get('/', function(req, res) {
   Class.getClasses(function(err, foundclasses){
     if(err){
@@ -11,10 +12,10 @@ router.get('/', function(req, res) {
     } else {
       res.render('classes/index', { classes: foundclasses, layout: false });
     }
-  }, 5); // the 5 here is the limit which is optional
+  }, 15); // the 5 here is the limit which is optional
 });
 
-
+// get the details of just a class
 router.get('/:id/details', ensureAuthenticated, function(req, res) {
   Class.getClassById(req.params.id, function(err, oneclass){
     if(err){
@@ -26,6 +27,7 @@ router.get('/:id/details', ensureAuthenticated, function(req, res) {
   });
 });
 
+// 
 router.get('/:id/lessons', ensureAuthenticated, function(req, res) {
   Class.getClassById(req.params.id, function(err, alllessons){
     if(err){
@@ -44,17 +46,17 @@ router.get('/:id/lessons/:lesson_id', ensureAuthenticated, function(req, res) {
       console.log(err); 
       res.send(err);
     } else {
-      // for(i=0; i<onelesson.lessons[1].lenght;1++){
-      //   if (onelesson.lessons[1] == req.params.lesson_id) {
-      //     lesson = onelesson.lessons[1];
-      //   }
-      // }
+      for(i=0;i<onelesson.lessons.lenght;i++){
+        if (onelesson.lessons[i].lesson_number == req.params.lesson_id){
+          lesson = onelesson.lessons[i];
+        }
+      }
       res.render('classes/lessons', {'class': onelesson, 'lesson': lesson, layout: false});
     }
   });
 });
 
-function ensureAuthenticated(req, res, next){
+function ensureAuthenticated(req, res, next){ 
     if(req.isAuthenticated()){
       return next();
     }

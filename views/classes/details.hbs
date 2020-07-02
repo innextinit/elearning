@@ -11,7 +11,7 @@
 	{{!--  end of nav bar --}}
 
 
-<div class="col-md-6 animate-box">
+                <div class="col-md-6 animate-box">
 					<div class="course">
 						<a href="#" class="course-img" style="background-image: url(images/project-1.jpg){{class.classImg.data}};">
 						</a>
@@ -21,14 +21,17 @@
 							<p>{{class.description}}</p>
                             <ul class="alt">
                                 {{#each class.lessons}}
+                                    <li>{{lesson_number}}</li>
                                     <li>{{lesson_title}}</li>
+                                    <li>{{lesson_body}}</li>
                                 {{/each}}
                             </ul>
 
                             <ul>
                                 {{#if user}}
+                                    {{!-- this is to register a class --}}
                                     var usertype = req.user.type;
-                                    <form action='/'+usertype+'s/classes/register' method="POST" id="classRegForm">
+                                    <form action='/'+usertype+'s/classes/' method="POST" id="classRegForm">
                                         <input type="hidden" name="student_username" value="{{user.username}}">
                                         <input type="hidden" name="class_id" value="{{class._id}}">
                                         <input type="hidden" name="class_title" value="{{class.title}}">

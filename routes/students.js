@@ -12,10 +12,11 @@ router.get('/classes', ensureAuthenticated, function(req, res){
             console.log(req.user.username);
             res.render('students/classes', {'student': student, layout: false} );
         }
-    });
+    }); 
 });
 
-router.post('/classes/register', ensureAuthenticated, function(req, res, next) {
+// register for new class
+router.post('/classes', function(req, res, next) {
     var student_username = req.user.student_username;
     console.log(student_username);
     var class_id = req.body.class_id;

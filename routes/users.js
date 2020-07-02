@@ -11,6 +11,30 @@ var User = require('../models/user');
 var Student = require('../models/student');
 var Teacher = require('../models/teacher');
 
+router.get('/', ensureAuthenticated, function(req, res, next) {
+  res.render('layout/index', {layout: false});
+});
+
+router.get('/upload', ensureAuthenticated, function(req, res, next) {
+  res.render('users/upload', {layout: false});
+});
+
+router.get('/edit', ensureAuthenticated, function(req, res, next) {
+  res.render('users/edit', {layout: false});
+});
+
+router.get('/changepw', ensureAuthenticated, function(req, res, next) {
+  res.render('users/changepw', {layout: false});
+});
+
+router.get('/forgotpw', ensureAuthenticated, function(req, res, next) {
+  res.render('users/forgotpw', {layout: false});
+});
+
+router.get('/2fauth', ensureAuthenticated, function(req, res, next) {
+  res.render('users/2fauth', {layout: false});
+});
+
 router.get('/register', function(req, res, next) {
   res.render('users/register', { layout: false} );
 });
@@ -148,7 +172,7 @@ router.post('/register', function(req, res, next) {
       });
     } // end of else for type check
     req.flash('success', 'User added.');
-    res.redirect('/');
+    res.redirect('/users/login');
   } // end of else for validation
 }); 
 
@@ -163,8 +187,7 @@ router.post('/login', passport.authenticate('local', {failureRedirect: '/users/l
   var username = req.body.username;
   console.log(username);
   req.flash('success', `Welcome`);
-  var usertype = req.user.type;
-  res.redirect('/'+usertype+'s/classes');
+  res.redirect('/users');
 });
 
 // localStrategy
@@ -216,6 +239,7 @@ function ensureAuthenticated(req, res, next){
     return next();
   }
   res.redirect('/');
-}
+};
+
 
 module.exports = router;
