@@ -1,29 +1,20 @@
-const express = require('express');
-const router = express.Router();
+var express = require('express');
+var router = express.Router();
 const { check, validationResult } = require('express-validator/check');
 
-const Message = require('../models/message');
-const Class = require('../models/class');
-
-router.get('/login', function(req, res) {
-  res.redirect('/users/login');
-});
-
-router.get('/register', function(req, res) {
-  res.redirect('/users/register');
-});
+var Message = require('../models/message');
 
 router.get('/contact', ensureAuthenticated, function(req, res) {
     res.render('contact', {layout: false});
 });
 
 router.post('/contact', ensureAuthenticated, function(req, res) {
-    const firstname = req.params.firstname;
-    const lastname = req.params.lastname;
-    const email = req.params.email;
-    const subject = req.params.subject;
-    const message = req.params.message;
-    const username = req.params.username;
+    var firstname = req.params.firstname;
+    var lastname = req.params.lastname;
+    var email = req.params.email;
+    var subject = req.params.subject;
+    var message = req.params.message;
+    var username = req.params.username;
 
 // form validation
   check('firstname', 'character allowed is a-z,A-Z')
@@ -78,7 +69,7 @@ router.post('/contact', ensureAuthenticated, function(req, res) {
         message: message
       });
     } else {
-        const newMessage = new Message({
+        var newMessage = new Message({
             firstname: firstname,
             lastname: lastname,
             email: email,
@@ -94,123 +85,53 @@ router.post('/contact', ensureAuthenticated, function(req, res) {
 
     req.flash()
 
-});
+})
 
 router.get('/business', function(req, res) {
-  Class.getClasses(function(err, foundclasses){
-    if(err){
-      console.log(err);
-      res.send(err);
-    } else {
   res.render('categories/business', {layout: false});
-    }
-  });
 });
 
 router.get('/health-psychology', function(req, res) {
-  Class.getClasses(function(err, foundclasses){
-    if(err){
-      console.log(err);
-      res.send(err);
-    } else {
   res.render('categories/health-psychology', {layout: false});
-    }
-  });
 });
 
 router.get('/accounting', function(req, res) {
-  Class.getClasses(function(err, foundclasses){
-    if(err){
-      console.log(err);
-      res.send(err);
-    } else {
   res.render('categories/accounting', {layout: false});
-    }
-  });
 });
 
 router.get('/it-software', function(req, res) {
-  Class.getClasses(function(err, foundclasses){
-    if(err){
-      console.log(err);
-      res.send(err);
-    } else {
   res.render('categories/it-software', {layout: false});
-    }
-  });
 });
 
 router.get('/art-media', function(req, res) {
-  Class.getClasses(function(err, foundclasses){
-    if(err){
-      console.log(err);
-      res.send(err);
-    } else {
   res.render('categories/art-media', {layout: false});
-    }
-  });
 });
 
 router.get('/office-productivity', function(req, res) {
-  Class.getClasses(function(err, foundclasses){
-    if(err){
-      console.log(err);
-      res.send(err);
-    } else {
   res.render('categories/office-productivity', {layout: false});
-    }
-  });
 });
 
 router.get('/language-lifestyle', function(req, res) {
-  Class.getClasses(function(err, foundclasses){
-    if(err){
-      console.log(err);
-      res.send(err);
-    } else {
   res.render('categories/language-lifestyle', {layout: false});
-    }
-  });
 });
 
 router.get('/web-programming', function(req, res) {
-  Class.getClasses(function(err, foundclasses){
-    if(err){
-      console.log(err);
-      res.send(err);
-    } else {
   res.render('categories/web-programming', {layout: false});
-    }
-  });
 });
 
 router.get('/design', function(req, res) {
-  Class.getClasses(function(err, foundclasses){
-    if(err){
-      console.log(err);
-      res.send(err);
-    } else {
   res.render('categories/design', {layout: false});
-    }
-  });
 });
 
 router.get('/music', function(req, res) {
-  Class.getClasses(function(err, foundclasses){
-    if(err){
-      console.log(err);
-      res.send(err);
-    } else {
   res.render('categories/music', {layout: false});
-    }
-  });
 });
 
 function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){
       return next();
     }
-    res.redirect('/login');
+    res.redirect('/');
   };
 
 module.exports = router;
