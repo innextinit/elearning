@@ -5,6 +5,14 @@ const { check, validationResult } = require('express-validator/check');
 const Message = require('../models/message');
 const Class = require('../models/class');
 
+router.get('/login', function(req, res) {
+  res.redirect('/users/login');
+});
+
+router.get('/register', function(req, res) {
+  res.redirect('/users/register');
+});
+
 router.get('/contact', ensureAuthenticated, function(req, res) {
     res.render('contact', {layout: false});
 });
@@ -202,7 +210,7 @@ function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){
       return next();
     }
-    res.redirect('/');
+    res.redirect('/login');
   };
 
 module.exports = router;
