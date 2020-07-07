@@ -5,8 +5,8 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
 const User = require("../models/user");
-const Teacher = require("../models/teacher");
 const user = require("../models/user");
+
 
 router.get("/classes", ensureAuthenticated, function(req, res){
   User.getUserByUsername(req.user.username, function(err, User){
@@ -153,7 +153,6 @@ router.post("/register", function(req, res, next) {
       email: email,
       username: username,
       password: password,
-      type: type,
       ipAddress: ipAddress,
       admin: false,
       active: false
@@ -173,16 +172,14 @@ router.get("/login", function(req, res, next) {
   res.render("users/login", { layout: false} );
 });
 
-router.post("/login", passport.authenticate("local", {failureRedirect: "/users/login", failureFlash: "Wrong Username or Password"}), function(req, res, next){
+router.post("/login", passport.authenticate("local", {failureRedirect: "/users/login", failureFlash: "Wrong Username or Password", session: true}), function(req, res){
   const ipAddress = req.connection.address();
   console.log(ipAddress);
   const username = req.body.username;
   console.log(username);
-  console.log(user);
   req.flash("success", `Welcome`);
   res.redirect("/");
   console.log(user);
-  console.log(user.classes);
 });
 
 // localStrategy
@@ -198,7 +195,6 @@ passport.use(new LocalStrategy(
       User.comparePassword(password, user.password, function(err, isMatch){
         console.log(user.password);
         console.log(user.username);
-        console.log(user.type);
         if(isMatch){
           return done(null, user);
         } else {
@@ -211,8 +207,8 @@ passport.use(new LocalStrategy(
   }
 ));
 
-passport.serializeUser(function(User, done){
-  done(null, User._id);
+passport.serializeUser(function(user, done){
+  done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done){

@@ -1,8 +1,13 @@
 var express = require('express');
 var router = express.Router();
+const { check, validationResult } = require("express-validator/check");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 
 var Class = require('../models/class');
 var Teacher = require('../models/teacher');
+const user = require('../models/user');
+const User = require('../models/user');
 
 router.get('/register', function(req, res){
     res.render('teachers/register', {layout: false})
@@ -109,7 +114,7 @@ router.get("/login", function(req, res, next) {
     res.render("teachers/login", { layout: false} );
   });
   
-  router.post("/login", passport.authenticate("local", {failureRedirect: "/teachers/login", failureFlash: "Wrong Username or Password"}), function(req, res, next){
+  router.post("/login", passport.authenticate("local", {failureRedirect: "/teachers/login", failureFlash: "Wrong Username or Password", session: true}), function(req, res, next){
     const ipAddress = req.connection.address();
     console.log(ipAddress);
     const username = req.body.username;
@@ -117,7 +122,6 @@ router.get("/login", function(req, res, next) {
     req.flash("success", `Welcome`);
     res.redirect("/");
     console.log(user);
-    console.log(user.classes);
   });
   
   // localStrategy
@@ -133,7 +137,6 @@ router.get("/login", function(req, res, next) {
         User.comparePassword(password, user.password, function(err, isMatch){
           console.log(user.password);
           console.log(user.username);
-          console.log(user.type);
           if(isMatch){
             return done(null, user);
           } else {
@@ -146,8 +149,8 @@ router.get("/login", function(req, res, next) {
     }
   ));
   
-  passport.serializeUser(function(User, done){
-    done(null, User._id);
+  passport.serializeUser(function(user, done){
+    done(null, user._id);
   });
   
   passport.deserializeUser(function(id, done){

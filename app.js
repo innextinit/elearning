@@ -5,14 +5,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const Handlebars = require('handlebars');
+// Only do this, if you have full control over the templates that are executed in the server
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 var handler = require('express-handlebars');
-const {check, validationResult} = require('express-validator/check');
-var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
-var localStrategy = require('passport-local').Strategy;
-var mongo = require('mongodb');
 var mongoose = require('mongoose');
+
 var fs = require('fs');
 var multer = require('multer');
 var url = process.env.DATABASE_URL;
@@ -33,11 +33,14 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.engine('.hbs', handler({
+app.engine('handlebars', handler({
+  handlebars: allowInsecurePrototypeAccess(Handlebars),
   defaultLayout: 'layout',
-  extname: '.hbs',
-  layoutsDir: path.join(__dirname, 'views/layout')})); // this is to set the default Layout to be a file name layout in the views folder
-app.set('view engine', '.hbs');
+  extname: 'handlebars',
+  layoutsDir: path.join(__dirname, 'views/layout')
+}));
+// this is to set the default Layout to be a file name layout in the views folder
+app.set('view engine', 'handlebars');
 
 app.use(logger('dev'));
 app.use(express.json());

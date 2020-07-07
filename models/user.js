@@ -73,7 +73,7 @@ module.exports = mongoose.model("User", UserSchema);
 // To fetch All Useres in the collection Useres in our DB
 module.exports.getUserByUsername = function (username, callback) {
     const query = {username: username};
-    User.findOne(query).populate("classes").exec(callback);
+    User.findOne(query, callback);
 };
 
 // To fatch just a User in the collection Users in our DB

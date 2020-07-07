@@ -9,7 +9,7 @@
 		{{!-- this is the start of nav bar --}}
 		{{>navbar}}
 	{{!--  end of nav bar --}}
-
+        <div class="col-md-5 col-md-push-1 col-md-pull-1 animate-box">
             <form class="form" action="/users/changepw" method="post">
                 <div class="form-group">
                     <div class="col-md-12 row">
@@ -33,6 +33,7 @@
                     <input class="btn btn-primary" name="submit" type="submit" value="Change Password" />
                 </div>
             </form>
+        </div>
 
 		{{>footer}}
 	</body>
