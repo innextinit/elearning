@@ -10,8 +10,8 @@
 		{{>navbar}}
 	{{!--  end of nav bar --}}
 
-        <h2>{{user.username}}'s Lessons</h2>
-        {{#if student._id}}
+        <h2>{{class.title}}'s Lessons</h2>
+        {{#if user._id}}
         <table cellspacing="0" cellpadding="0">
             <thead>
                 <th>Lesson Number</th>
@@ -19,7 +19,7 @@
                 <th>View Leson</th>
             </thead>
             <tbody>
-                {{#each student.Classes}}
+                {{#each user.classes}}
                     <tr>
                         <td>{{lesson_number}}</td>
                         <td>{{lesson_title}}</td>

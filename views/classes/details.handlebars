@@ -17,7 +17,7 @@
 						</a>
 						<div class="desc">
 							<h3><a href="#">{{class.title}}</a></h3>
-                            <p>Instructor : <a href="/teacher/:{{id_teacher}}/details">{{class.teacher}}</a></p>
+                            <p>Instructor : <a href="/teacher/:{{id_teacher}}">{{class.teacher}}</a></p>
 							<p>{{class.description}}</p>
                             <ul class="alt">
                                 {{#each class.lessons}}
@@ -30,9 +30,8 @@
                             <ul>
                                 {{#if user}}
                                     {{!-- this is to register a class --}}
-                                    var usertype = req.user.type;
-                                    <form action='/'+usertype+'s/classes/' method="POST" id="classRegForm">
-                                        <input type="hidden" name="student_username" value="{{user.username}}">
+                                    <form action='/users/classes/' method="POST" id="classRegForm">
+                                        <input type="hidden" name="username" value="{{user.username}}">
                                         <input type="hidden" name="class_id" value="{{class._id}}">
                                         <input type="hidden" name="class_title" value="{{class.title}}">
                                         <input type="submit" name="button" value="Register For This Class">

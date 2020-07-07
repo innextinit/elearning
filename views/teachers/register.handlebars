@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+		{{>header}}
+	<body>
+		
+	<div class="fh5co-loader"></div>
+	
+	<div id="page">
+		{{!-- this is the start of nav bar --}}
+		{{>navbar}}
+	{{!--  end of nav bar --}}
+
+<div class="col-md-5 col-md-push-1 col-md-pull-1 animate-box">
+
+    <h4>Register</h4>
+    <p>Please register using the form below</p>
+
+    <form class="form animate-box" action="/teachers/register" method="POST" enctype="multipart/form-data">
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>Full Name</label>
+                <input class="form-control" name="name" type="text" placeholder="Enter Name" minlength="4" maxlength="30" autofocus/>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>Stree Address</label>
+                <input class="form-control" name="street_address" type="text" placeholder="Enter Street Address" minlength="4" maxlength="35" />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>City</label>
+                <input class="form-control" name="city" type="text" placeholder="Enter City" minlength="2" maxlength="20" />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>State</label>
+                <input class="form-control" name="state" type="text" placeholder="Enter State" minlength="2" maxlength="20" />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>Zip</label>
+                <input class="form-control" name="zip" type="text" placeholder="Enter Zip" minlength="6" maxlength="10" />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>Email</label>
+                <input class="form-control" name="email" type="email" placeholder="Enter Email" minlength="11" maxlength="35" />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>Username</label>
+                <input class="form-control" name="username" type="text" placeholder="Username" minlength="3" maxlength="14" />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>Password</label>
+                <input class="form-control" name="password" type="password" placeholder="Enter Password" minlength="10" maxlength="35" />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>Comfirm Password</label>
+                <input class="form-control" name="password2" type="password" placeholder="Confirm Password" minlength="10" maxlength="35" />
+            </div>
+        </div>
+        <div class="row form-group">
+            <input class="btn btn-primary" name="submit" type="submit" value="Register" />
+        </div>
+        
+    </form>
+
+</div>
+
+
+		{{>footer}}
+	</body>
+</html>

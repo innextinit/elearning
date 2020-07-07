@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+		{{>header}}
+	<body>
+		
+	<div class="fh5co-loader"></div>
+	
+	<div id="page">
+		{{!-- this is the start of nav bar --}}
+		{{>navbar}}
+	{{!--  end of nav bar --}}
+        <div class="col-md-5 col-md-push-1 col-md-pull-1 animate-box">
+            <form class="form" action="/users/changepw" method="post">
+                <div class="form-group">
+                    <div class="col-md-12 row">
+                        <label>Current Password</label>
+                        <input class="form-control" name="oldpassword" type="password" placeholder="Enter Current Password" minlength="10" maxlength="35" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 row">
+                        <label>New Password</label>
+                        <input class="form-control" name="newpassword" type="password" placeholder="Enter Password" minlength="10" maxlength="35" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 row">
+                        <label>Comfirm New Password</label>
+                        <input class="form-control" name="comfirmpassword" type="password" placeholder="Enter Password" minlength="10" maxlength="35" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary" name="submit" type="submit" value="Change Password" />
+                </div>
+            </form>
+        </div>
+
+		{{>footer}}
+	</body>
+</html>
