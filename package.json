@@ -6,7 +6,6 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "@handlebars/allow-prototype-access": "^1.0.3",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.4",

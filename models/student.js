@@ -3,8 +3,8 @@ var fs = require("fs");
 var multer = require("multer");
 var bcryptjs = require('bcryptjs');
 
-// Teacher Schema (this is the definition of the input the DB will take more like stating the head of table)
-var TeacherSchema = new mongoose.Schema({
+// Student Schema (this is the definition of the input the DB will take more like stating the head of table)
+var StudentSchema = new mongoose.Schema({
     name: {
     type: String,
     index: true,
@@ -17,7 +17,7 @@ var TeacherSchema = new mongoose.Schema({
     state: {type: String, trim: true, require: true},
     zip: {type: Number, trim: true, require: true}
   }],
-    username: {
+  username: {
     type: String,
     index: true,
     trim: true,
@@ -30,34 +30,33 @@ var TeacherSchema = new mongoose.Schema({
     require: true,
     unique: true
   },
-  TeacherImg: {
+  StudentImg: {
     data: Buffer, // using Buffer, which allows us to store our image as data in the form of arrays
     contentType: String,
   },
   classes: [{
-    class_id:{type: [mongoose.Schema.Types.ObjectId]},
+    class_id:{type: [mongoose.Schema.Types.ObjectId], ref: 'Class'},
     class_title:{type: String}
   }],
   admin: false,
 });
 
-// this is to convert this TeacherSchema in a usable model called Teacher
-var Teacher = mongoose.model("Teacher", TeacherSchema);
-module.exports = mongoose.model("Teacher", TeacherSchema); // then this export the model Teacher so it can be used outside this file.
+var Student = mongoose.model("Student", StudentSchema);
+module.exports = mongoose.model("Student", StudentSchema);
 
-module.exports.getTeacherByUsername = function(username, callback) {
+module.exports.getStudentByUsername = function(username, callback) {
   var query = {username: username};
-  Teacher.findOne(query, callback).lean();
+  Student.findOne(query, callback).lean();
 };
 
 // newClass
 module.exports.saveNewClass = function(newClass, callback){
-  teacher_username = newClass.teacher_username;
+  student_username = newClass.student_username;
   class_id = newClass.class_id;
   class_title = newClass.class_title;
 
-  var query = {username: teacher_username}
-  Teacher.findOneAndUpdate(
+  var query = {username: student_username}
+  Student.findOneAndUpdate(
     query,
     {$push: {"classes": {class_id: class_id, class_title: class_title}}},
     {save: true, upsert: true},
