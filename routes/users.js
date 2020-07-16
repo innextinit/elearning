@@ -229,24 +229,6 @@ router.post('/courses/register', ensureAuthenticated, function(req, res, next) {
   res.redirect('teachers/courses');
 });
 
-router.get('/courses/:id/lessons/new', ensureAuthenticated, function(req, res){
-  res.render('teachers/newlesson', {'course_id': req.params.id, layout: false} );
-});
-
-router.post('/courses/:id/lessons/new', ensureAuthenticated, function(req, res){
-  var newlesson = {}
-  newlesson.course_id = req.params.id;
-  newlesson.lesson_number = req.body.lesson_number;
-  newlesson.lesson_title = req.body.lesson_title;
-  newlesson.lesson_body = req.body.lesson_body;
-
-  Course.addLesson(newlesson, function(err, lesson){
-      console.log('Lesson Added');
-  });
-  req.flash('success', 'lesson added');
-  res.redirect('/teachers/courses');
-});
-
 router.get("/upload", ensureAuthenticated, function(req, res) {
   res.render("users/upload", {layout: false});
 });
