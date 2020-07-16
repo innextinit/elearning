@@ -10,7 +10,30 @@
 		{{>navbar}}
 	{{!--  end of nav bar --}}
 
+	<div class="col-md-5 col-md-push-1 col-md-pull-1 animate-box">
 
+    <h4>Profile Picture</h4>
+    <p>Upload Profile Picture</p>
+
+    <form class="form animate-box md-form" action="/users/upload" method="POST" enctype="multipart/form-data">
+
+        <div class="file-field">
+            <div class="mb-4">
+                <span>
+                    <img src="{{user.userImg}}" alt="placeholder avatar" >
+                    <input type="file" name="userImg" id="userImg" accept="image/*"
+                </span>
+            </div>
+            <div class="d-fle x justify-content-center">
+                <div class="btn btn-primary">
+                    <input type="submit" value="Upload Photo">
+                </div>
+            </div>
+        </div>
+        
+    </form>
+
+</div>
 
 	    	{{>footer}}
 	</body>

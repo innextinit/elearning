@@ -3,66 +3,50 @@ const router = express.Router();
 const { check, validationResult } = require("express-validator/check");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const multer = require('multer');
+const fs = require("fs")
 
 const User = require("../models/user");
 const user = require("../models/user");
+const { request } = require("http");
+// const { path } = require("../app");
 
-
-router.get("/classes", ensureAuthenticated, function(req, res){
-  User.getUserByUsername(req.user.username, function(err, User){
-      if (err) {
-          console.log(err);
-          res.send(err);
-      } else {
-          console.log(req.user.username);
-          res.render("users/classes", {"user": User, layout: false} );
-      }
-  }); 
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, "../upload/userImg");
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + file.originalname.toLowerCase());
+  },
 });
+console.log(storage);
 
-// register for new class
-router.post("/classes", function(req, res, next) {
-  const username = req.user.username;
-  console.log(username);
-  const class_id = req.body.class_id;
-  console.log(class_id);
-  const class_title = req.body.class_title;
-  console.log(class_title);
+const upload = multer({
+  storage: storage,
+  limits: {
+    fieldNameSize: 100,
+    fileSize: 4*1024*1024,
+    fieldSize: 4*1024*1024,
+    files: 1
+  },
+  fileFilter: function(req, file, cb) {
+    const filetypes = /jpeg|jpg|png|/;
+    // const mimetype = filetypes.test(file.mimetype);
+    // const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 
-  const newClass = [];
-  newClass.username = username;
-  newClass.class_id = class_id;
-  newClass.class_title = class_title;
- 
-  User.saveNewClass(newClass, function(err, user){
-      if(err) throw err;
-      console.log(user);
-      console.log(newClass);
-      console.log(user.classes);
-  });
-  req.flash("successs", "class added");
-  res.redirect("/users/classes");
+    // if (mimetype && extname) {
+    //   return cb (null, true);
+    // } else {
+    //   cb ("Error: File upload support the following filetype only - " + filetypes)
+    // }
+
+    if (!file.originalname.match(/\.(jpeg|jpg|png)$/)) {
+      return cb(new Error(`File upload support the following filetype only - ${filetypes}`), false);
+    }
+    cb(null, true);
+  }
 });
-
-router.get("/upload", ensureAuthenticated, function(req, res, next) {
-  res.render("users/upload", {layout: false});
-});
-
-router.get("/edit", ensureAuthenticated, function(req, res, next) {
-  res.render("users/edit", {layout: false});
-});
-
-router.get("/changepw", ensureAuthenticated, function(req, res, next) {
-  res.render("users/changepw", {layout: false});
-});
-
-router.get("/forgotpw", ensureAuthenticated, function(req, res, next) {
-  res.render("users/forgotpw", {layout: false});
-});
-
-router.get("/2fauth", ensureAuthenticated, function(req, res, next) {
-  res.render("users/2fauth", {layout: false});
-});
+console.log(upload)
 
 router.get("/register", function(req, res, next) {
   res.render("users/register", { layout: false} );
@@ -144,12 +128,12 @@ router.post("/register", function(req, res, next) {
     // to create newUser
     const newUser = new User({
       name: name,
-      address: [{
+      address: {
         street_address: street_address,
         city: city,
         state: state,
         zip: zip
-      }],
+      },
       email: email,
       username: username,
       password: password,
@@ -167,7 +151,6 @@ router.post("/register", function(req, res, next) {
   } // end of else for validation
 }); 
 
-
 router.get("/login", function(req, res, next) {
   res.render("users/login", { layout: false} );
 });
@@ -177,10 +160,138 @@ router.post("/login", passport.authenticate("local", {failureRedirect: "/users/l
   console.log(ipAddress);
   const username = req.body.username;
   console.log(username);
+  console.log(user);
   req.flash("success", `Welcome`);
   res.redirect("/");
-  console.log(user);
 });
+
+// get list of all user courses
+router.get("/courses", ensureAuthenticated, function(req, res){
+  User.getUserByUsername(req.user.username, function(err, User){
+      if (err) {
+          console.log(err);
+          res.send(err);
+      } else {
+          console.log(req.user.username);
+          res.render("users/courses", {"user": User, layout: false} );
+      }
+  }); 
+});
+
+// this is to register a user for the course
+router.post("/courses", ensureAuthenticated, function(req, res, next) {
+  const username = req.user.username;
+  console.log(username);
+  const course_id = req.body.course_id;
+  console.log(course_id);
+  const course_title = req.body.course_title;
+  console.log(course_title);
+
+  const newCourse = [];
+  newCourse.username = username;
+  newCourse.course_id = course_id;
+  newCourse.course_title = course_title;
+ 
+  User.saveNewCourse(newCourse, function(err, user){
+      if(err) throw err;
+      console.log(user);
+      console.log(newCourse);
+      console.log(user.courses);
+  });
+  req.flash("successs", "course added");
+  res.redirect("/users/courses");
+});
+
+router.get('/courses/register', ensureAuthenticated, function(req, res, next) {
+res.render("courses/register")
+});
+
+router.post('/courses/register', ensureAuthenticated, function(req, res, next) {
+  var username = req.user.username;
+  console.log(username);
+  var course_id = req.body.course_id;
+  console.log(course_id);
+  var course_title = req.body.course_title;
+  console.log(course_title);
+
+  var newCourse = {
+      username: username,
+      course_id: course_id,
+      course_title: course_title
+  };
+
+  Teacher.saveNewCourse(newCourse, function(err, user){
+      if(err) throw err;
+      console.log(user);
+      console.log(newCourse);
+  });
+  req.flash('successs', 'course added');
+  res.redirect('teachers/courses');
+});
+
+router.get('/courses/:id/lessons/new', ensureAuthenticated, function(req, res){
+  res.render('teachers/newlesson', {'course_id': req.params.id, layout: false} );
+});
+
+router.post('/courses/:id/lessons/new', ensureAuthenticated, function(req, res){
+  var newlesson = {}
+  newlesson.course_id = req.params.id;
+  newlesson.lesson_number = req.body.lesson_number;
+  newlesson.lesson_title = req.body.lesson_title;
+  newlesson.lesson_body = req.body.lesson_body;
+
+  Course.addLesson(newlesson, function(err, lesson){
+      console.log('Lesson Added');
+  });
+  req.flash('success', 'lesson added');
+  res.redirect('/teachers/courses');
+});
+
+router.get("/upload", ensureAuthenticated, function(req, res) {
+  res.render("users/upload", {layout: false});
+});
+// this is for when i am sending POST req to add new course to inculde this part for the courseImg upload that is include.
+
+router.post("/upload", ensureAuthenticated, upload.single("userImg"), async function(req, res, next){
+  try {
+    const Img = fs.readFileSync(req.file.path);
+    const encodeImg = Img.toString("base64");
+    const userImg = ({
+      contentType: req.file.mimetype,
+      data: new Buffer(encodeImg, "base64")
+    });
+    console.log(userImg);
+
+    User.findOneAndUpdate(username, {"userImg": userImg},
+    {upsert: true, new: true, save: true}
+    );
+
+    const file = req.file;
+    if (!file) {
+      req.flash("failed", "please pick a file for upload")
+    }
+  } catch (error) {
+    
+  }
+
+  // res.redirect("/users/upload");
+});
+router.get("/edit", ensureAuthenticated, function(req, res, next) {
+  res.render("users/edit", {layout: false});
+});
+
+router.get("/changepw", ensureAuthenticated, function(req, res, next) {
+  res.render("users/changepw", {layout: false});
+});
+
+router.get("/forgotpw", ensureAuthenticated, function(req, res, next) {
+  res.render("users/forgotpw", {layout: false});
+});
+
+router.get("/2fauth", ensureAuthenticated, function(req, res, next) {
+  res.render("users/2fauth", {layout: false});
+});
+
 
 // localStrategy
 passport.use(new LocalStrategy( 
@@ -222,15 +333,21 @@ router.get("/logout", ensureAuthenticated, function(req, res){
   req.session.destroy(function(err, callback){
     res.redirect("/login");
   });
-
 });
 
 function ensureAuthenticated(req, res, next){
   if(req.isAuthenticated()){
     return next();
   }
-  res.redirect("/login");
+  res.redirect("/users/login");
 };
 
+function isTutor(req, res, next) {
+  if (req.user.role==tutor) {
+    return next()
+  } else {
+    req.flash("failed", "You dont have access to create ")
+  }
+}
 
 module.exports = router;

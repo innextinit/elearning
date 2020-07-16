@@ -10,7 +10,7 @@
 		{{>navbar}}
 	{{!--  end of nav bar --}}
 
-        <h2>{{class.title}}'s Lessons</h2>
+        <h2>{{course.title}}'s Lessons</h2>
         <table cellspacing="0" cellpadding="0">
             <thead>
                 <th>Lesson Number</th>
@@ -18,11 +18,11 @@
                 <th>View Leson</th>
             </thead>
             <tbody>
-                {{#each class.Lessons}}
+                {{#each course.Lessons}}
                     <tr>
                         <td>{{lesson_number}}</td>
                         <td>{{lesson_title}}</td>
-                        <td><a href="/classes/{{../class_id}}/lessons/{{lesson_number}}">View Lesson</a></td>
+                        <td><a href="/coursees/{{../course_id}}/lessons/{{lesson_number}}">View Lesson</a></td>
                     </tr>
                 {{/each}}
             </tbody>

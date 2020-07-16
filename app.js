@@ -1,35 +1,38 @@
-var dotenv = require('dotenv');
+const dotenv = require('dotenv');
 dotenv.config();
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const Handlebars = require('handlebars');
 // Only do this, if you have full control over the templates that are executed in the server
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
-var handler = require('express-handlebars');
-var session = require('express-session');
-var passport = require('passport');
-var mongoose = require('mongoose');
+const handler = require('express-handlebars');
+const session = require('express-session');
+const passport = require('passport');
+const mongoose = require('mongoose');
+const flash = require("connect-flash")
 
-var fs = require('fs');
-var multer = require('multer');
-var url = process.env.DATABASE_URL;
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+// connection to MongoDB
+const url = process.env.DATABASE_URL;
+mongoose.connect(url, { 
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+}).then(() => {
+  console.log("MongoDB connected");
+}).catch((error) => {
+  console.log("unable to connect MongoDB");
+  console.log(error);
+});
 
-// this is to be able to use something like {type: [mongoose.Schema.Types.ObjectId], ref: 'Class'}
-var ClassScheme = require('./models/class').schema;
-var MessageScheme = require('./models/message').schema
-var TeacherScheme = require('./models/teacher').schema
-var UserScheme = require('./models/user').schema
+const indexRouter = require('./routes/index');
+const users = require('./routes/users');
+const courses = require('./routes/courses');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var classes = require('./routes/classes');
-var teachers = require('./routes/teachers');
-
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -66,9 +69,9 @@ app.use(passport.session());
 // express validator
 app.use(require('express-validator')({
   errorFormatter: function(param, msg, value) {
-    var namespace = param.split('.');
-    var root = namespace.shift();
-    var formParam = root;
+    const namespace = param.split('.');
+    const root = namespace.shift();
+    const formParam = root;
 
     while(namespace.length) {
       formParam += '[' + namespace.shift() + ']';
@@ -81,16 +84,9 @@ app.use(require('express-validator')({
   }
 }));
 
-app.use(multer({
-  dest: './upload/',
-  rename: function(fieldname, filename){
-    return filename;
-  },
-}).single('classImg'));
-
 // connect-flash for flash messages
-app.use(require('connect-flash')());
-// giving a global var so that when we get a message its saved in messages which can be access 
+app.use(flash());
+// giving a global const so that when we get a message its saved in messages which can be access 
 app.use(function (req, res, next) {
   res.locals.messages = require('express-message')(req, res);
   if(req.url == '/' || '/users') {
@@ -110,9 +106,8 @@ app.get('*', function(req, res, next) {
 });
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/classes', classes);
-app.use('/teachers', teachers);
+app.use('/users', users);
+app.use('/courses', courses);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -132,7 +127,7 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-var port = process.env.PORT;
+const port = process.env.PORT;
 console.log(process.env.PORT)
 app.listen(port, function(){
   console.log(`server running on port ${port}`);

@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const fs = require("fs");
 const multer = require("multer");
-const bcryptjs = require("bcryptjs");
+const bcryptjs = require("bcrypt");
+const validator = require("validator");
 
 // User Schema (this is the definition of the input the DB will take more like stating the head of table)
 const UserSchema = new mongoose.Schema({
@@ -11,30 +12,51 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     require: true,
   },
-  address: [{
+  address: {
     street_address: {type: String, trim: true, require: true},
     city: {type: String, trim: true, require: true},
     state: {type: String, trim: true, require: true},
     zip: {type: Number, trim: true, require: true}
-  }],
+  },
   username: {
     type: String,
     index: true,
     trim: true,
     require: true,
+    unique: true,
   },
   email: {
     type: String,
     trim: true,
     require: true,
+    unique: true,
+    validate: value => {
+      if (!validator.isEmail(value)) {
+        throw new Error({
+          error : "Invalid Email"
+        });
+      }
+    }
   },
-  UserImg: {
+  userImg: {
     data: Buffer, // using Buffer, which allows us to store our image as data in the form of arrays
     contentType: String,
   },
-  classes: [
-    {type: [mongoose.Schema.Types.ObjectId], ref: "Class"},
-  ],
+  ipAddress: {
+    type: Array,
+  },
+  // token: {
+  //   type: String,
+  //   required: true
+  // },
+  role: {
+    type: String,
+    enum:["student", "tutor", "admin"],
+    default: "student"
+  },
+  classes: {
+      type: [mongoose.Schema.Types.ObjectId], ref: "Class"
+    },
   password: {
     type: String,
     bcryptjs: true,
@@ -46,11 +68,15 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now()
   },
-  has_activated: {
+  title: {
+    type: String,
+    enum: ["Mr", "Mrs", "Dr.", "Prof."]
+  },
+  hasActivated: {
     type: Boolean,
     default: false
   },
-  is_disable: {
+  isDisable: {
     type: Boolean,
     default: false
   },
@@ -58,7 +84,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     enum: ["Mr", "Mrs", "Dr.", "Prof."]
   }
-});
+}, {timestamps: true});
 
 // virtual userurl
 UserSchema.virtual("url").get(function(){
@@ -71,25 +97,38 @@ const User = mongoose.model("User", UserSchema);
 module.exports = mongoose.model("User", UserSchema);
 
 // To fetch All Useres in the collection Useres in our DB
-module.exports.getUserByUsername = function (username, callback) {
+module.exports.getUserByUsername = function(username, callback) {
     const query = {username: username};
     User.findOne(query, callback);
 };
 
 // To fatch just a User in the collection Users in our DB
-module.exports.getUserById = function (id, callback) {
+module.exports.getUserById = function(id, callback) {
   User.findById(id, callback).lean();
+};
+
+// To fatch just a teacher in the collection teachers in our DB
+module.exports.getTeacherById = function(id, callback) {
+  Teacher.findById(id, callback).lean();
 };
 
 // save User
 module.exports.saveUser = function(newUser, callback) {
     bcryptjs.hash(newUser.password, 15, function(err, hash){
         if (err) throw err;
-        newUser.save(callback);
         newUser.password = hash;
+        newUser.save(callback);
         console.log("User is saved");
         console.log(newUser);
     });
+};
+
+// Compare Password
+module.exports.comparePassword = function(usersPassword, hash, callback) {
+  bcryptjs.compare(usersPassword, hash, function(err, isMatch){
+    if (err) throw err;
+    callback(null, isMatch);
+  });
 };
 
 // newClass
@@ -107,19 +146,3 @@ module.exports.saveNewClass = function(newClass, callback){
   ).lean();
 };
 
-// Compare Password
-module.exports.comparePassword = function(usersPassword, hash, callback) {
-  bcryptjs.compare(usersPassword, hash, function(err, isMatch){
-    if (err) throw err;
-    callback(null, isMatch);
-  });
-};
-
-// this is for when i am sending POST req to add new class to inculde this part for the classImg upload that is include.
-
-// app.post("/api/photo", function(req, res){
-//     const newClass = new Class();
-//     newClass.classImg.data = fs.readFileSync(req.files.userPhoto.path);
-//     newClass.classImg.contentType = "image/png";
-//     newClass.save();
-// });

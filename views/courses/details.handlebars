@@ -13,14 +13,14 @@
 
                 <div class="col-md-6 animate-box">
 					<div class="course">
-						<a href="#" class="course-img" style="background-image: url(images/project-1.jpg){{class.classImg.data}};">
+						<a href="#" class="course-img" style="background-image: url(images/project-1.jpg){{course.courseImg.data}};">
 						</a>
 						<div class="desc">
-							<h3><a href="#">{{class.title}}</a></h3>
-                            <p>Instructor : <a href="/teacher/:{{id_teacher}}">{{class.teacher}}</a></p>
-							<p>{{class.description}}</p>
+							<h3><a href="#">{{course.title}}</a></h3>
+                            <p>Instructor : <a href="/teacher/:{{id_teacher}}">{{course.teacher}}</a></p>
+							<p>{{course.description}}</p>
                             <ul class="alt">
-                                {{#each class.lessons}}
+                                {{#each course.lessons}}
                                     <li>{{lesson_number}}</li>
                                     <li>{{lesson_title}}</li>
                                     <li>{{lesson_body}}</li>
@@ -29,12 +29,12 @@
 
                             <ul>
                                 {{#if user}}
-                                    {{!-- this is to register a class --}}
-                                    <form action='/users/classes/' method="POST" id="classRegForm">
+                                    {{!-- this is to register a course --}}
+                                    <form action='/users/courses/' method="POST" id="courseRegForm">
                                         <input type="hidden" name="username" value="{{user.username}}">
-                                        <input type="hidden" name="class_id" value="{{class._id}}">
-                                        <input type="hidden" name="class_title" value="{{class.title}}">
-                                        <input type="submit" name="button" value="Register For This Class">
+                                        <input type="hidden" name="course_id" value="{{course._id}}">
+                                        <input type="hidden" name="course_title" value="{{course.title}}">
+                                        <input type="submit" name="button" value="Register For This Course">
                                     </form>
                                 {{else}}
                                     <p><em>Please Login</em></p>

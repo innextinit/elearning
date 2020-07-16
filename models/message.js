@@ -1,17 +1,9 @@
 var mongoose = require("mongoose");
-var fs = require("fs");
-var multer = require("multer");
-var bcryptjs = require('bcryptjs');
+const validator = require("validator");
 
 // Message Schema (this is the definition of the input the DB will take more like stating the head of table)
 var MessageSchema = new mongoose.Schema({
-    firstname: {
-    type: String,
-    index: true,
-    trim: true,
-    require: true,
-  },
-  lastname: {
+    name: {
     type: String,
     index: true,
     trim: true,
@@ -22,6 +14,13 @@ var MessageSchema = new mongoose.Schema({
     index: true,
     trim: true,
     require: true,
+    validate: value => {
+      if (!validator.isEmail(value)) {
+        throw new Error({
+          error : "Invalid Email"
+        });
+      }
+    }
   },
   subject: {
     type: String,
@@ -44,13 +43,6 @@ module.exports = mongoose.model("Message", MessageSchema);
 
 // newClass
 module.exports.saveNewMessage = function(newMessage, callback){
-    firstname = firstname;
-    lastname = lastname;
-    email = email;
-    subject = subject;
-    message = message;
-    username = username;
-
     newMessage.save(callback);
     console.log(newMessage);
 };

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+		{{>header}}
+	<body>
+		
+	<div class="fh5co-loader"></div>
+	
+	<div id="page">
+		{{!-- this is the start of nav bar --}}
+		{{>navbar}}
+	{{!--  end of nav bar --}}
+
+    {{#if user.role==tutor}}
+    <div class="col-md-5 col-md-push-1 col-md-pull-1 animate-box">
+            <form class="form" action="/courses/register" method="post">
+                <div class="form-group" id="focus">
+                    <div class="col-md-12 row">
+                        <label for="title">Title</label>
+                        <input type="text" name="title" id="title" placeholder="Course Title" autofocus>
+                    </div>
+                </div>
+
+                <div class="form-group" id="focus">
+                    <div class="col-md-12 row">
+                        <label for="description">Description</label>
+                        <input type="text" name="description" id="description" placeholder="Course Description">
+                    </div>
+                </div>
+
+                <div class="form-group" id="focus">
+                    <div class="col-md-12 row">
+                        <label for="headline">Headline</label>
+                        <input type="text" name="headline" id="headline" placeholder="Course Headline">
+                    </div>
+                </div>
+
+                <div class="form-group" id="focus">
+                    <div class="col-md-12 row">
+                        <label for="isPaid">Is Course Paid</label>
+                        <select name="isPaid" id="isPaid">
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" id="focus">
+                    <div class="col-md-12 row">
+                        <label for="numTeachers">Number of Teachers Involved</label>
+                        <input type="number" name="numTeachers" id="numTeachers" placeholder="Number of Teachers Involved">
+                    </div>
+                </div>
+
+                <div class="form-group" id="focus">
+                    <div class="col-md-12 row">
+                        <label for="numQuizzes">Number of Quizzes</label>
+                        <input type="number" name="numQuizzes" id="numQuizzes" placeholder="Number of Quizzes">
+                    </div>
+                </div>
+
+                <div class="form-group" id="focus">
+                    <div class="col-md-12 row">
+                        <label for="price">Price</label>
+                        <input type="number" name="price" id="price" placeholder="Course Price in $USD">
+                    </div>
+                </div>
+            
+            <div class="form-group" id="focus">
+                    <div class="col-md-12 row">
+                        <label for="courseImg">Course Image</label>
+                        <input type="file" name="courseImg" id="courseImg" placeholder="Upload Course Image">
+                    </div>
+                </div>
+
+                <div class="form-group" id="focus">
+                    <div class="col-md-12 row">
+                        <label for="teacher">Teacher</label>
+                        <input type="hidden" name="teacher" id="teacher" value="user._id">
+                    </div>
+                </div>
+
+                <div class="form-group" id="focus">
+                    <div class="col-md-12 row">
+                        <label for="primaryCategory">Primary Category</label>
+                        <input type="text" name="primaryCategory" id="primaryCategory" placeholder="Course Primary Category">
+                    </div>
+                </div>
+
+                <div class="form-group" id="focus">
+                    <div class="col-md-12 row">
+                        <label for="subCategory">Sub-Category</label>
+                        <input type="text" name="subCategory" id="subCategory" placeholder="Course Sub-Category">
+                    </div>
+                </div>
+
+                <div class="form-group" id="focus">
+                    <div class="col-md-12 row">
+                        <label for="language">Language</label>
+                        <input type="text" name="language" id="language" placeholder="Course language">
+                    </div>
+                </div>
+
+                <div class="form-group" id="focus">
+                    <div class="col-md-12 row">
+                        <label for="teacher">Name of Teacher(s)</label>
+                        <input type="text" name="teacher" id="teacher" placeholder="Name of Teacher(s) Involved">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input class="btn btn-primary" name="submit" type="submit" value="Add Course" />
+                </div>
+            </form>
+    </div>
+    {{else}}
+    <div class="col-md-5 col-md-push-1 col-md-pull-1 animate-box">
+        <h1>SEE YOU, get OUT of here!</h1>
+    </div>
+    {{/if}}
+
+		{{>footer}}
+	</body>
+</html>

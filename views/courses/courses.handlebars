@@ -10,28 +10,28 @@
 		{{>navbar}}
 	{{!--  end of nav bar --}}
 
-        <h2>{{user.username}}'s Classes</h2>
+        <h2>{{user.username}}'s Courses</h2>
         {{#if teacher._id}}
         <table cellspacing="0" cellpadding="0">
             <thead>
-                <th>Class ID</th>
-                <th>Class Name</th>
+                <th>Course ID</th>
+                <th>Course Name</th>
                 <th>View Lessons</th>
                 <th>Add Lesson</th>
             </thead>
             <tbody>
-                {{#each teacher.Classes}}
+                {{#each teacher.Courses}}
                     <tr>
-                        <td>{{class._id}}</td>
-                        <td>{{class.title}}</td>
-                        <td><a href="/classes/{{class_id}}/lessons">View Lessons</a></td>
-                        <td><a href="/classes/{{class_id}}/lessons/new">Add Lesson</a></td>
+                        <td>{{course._id}}</td>
+                        <td>{{course.title}}</td>
+                        <td><a href="/courses/{{course_id}}/lessons">View Lessons</a></td>
+                        <td><a href="/courses/{{course_id}}/lessons/new">Add Lesson</a></td>
                     </tr>
                 {{/each}}
             </tbody>
         </table>
         {{else}}
-        <p>You have not registed for any classes</p>
+        <p>You have not registed for any courses</p>
         {{/if}}
 
 		{{>footer}}
