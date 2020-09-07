@@ -10,7 +10,7 @@
 		{{>navbar}}
 	{{!--  end of nav bar --}}
 
-    {{#if user.role==tutor}}
+    {{#if user.role.tutor}}
     <div class="col-md-5 col-md-push-1 col-md-pull-1 animate-box">
             <form class="form" action="/courses/register" method="post">
                 <div class="form-group" id="focus">

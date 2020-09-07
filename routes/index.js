@@ -4,12 +4,17 @@ const { check, validationResult } = require("express-validator/check");
 
 const Message = require("../models/message");
 const Course = require("../models/course");
+const User = require("../models/user");
+const auth = require("../controller/auth");
 
 router.get("/", function(req, res) {
   res.render("layout/layout", {layout: false});
 });
 
-router.get("/contact", ensureAuthenticated, function(req, res) {
+router.get("/confirmation/:token", async function(req, res, next) {
+})
+
+router.get("/contact", auth.ensureAuthenticated, auth.verifyToken, function(req, res) {
     res.render("contact", {layout: false});
 });
 

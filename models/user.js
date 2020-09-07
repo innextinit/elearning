@@ -1,35 +1,35 @@
-const mongoose = require("mongoose");
-const fs = require("fs");
-const multer = require("multer");
-const bcryptjs = require("bcrypt");
-const validator = require("validator");
+const mongoose =      require("mongoose");
+const fs =            require("fs");
+const multer =        require("multer");
+const bcryptjs =      require("bcrypt");
+const validator =     require("validator");
 
 // User Schema (this is the definition of the input the DB will take more like stating the head of table)
 const UserSchema = new mongoose.Schema({
   name: {
-    type: String,
-    index: true,
-    trim: true,
-    require: true,
+    type:          String,
+    index:         true,
+    trim:          true,
+    require:       true,
   },
   address: {
-    street_address: {type: String, trim: true, require: true},
-    city: {type: String, trim: true, require: true},
-    state: {type: String, trim: true, require: true},
-    zip: {type: Number, trim: true, require: true}
+    street_address: {type: String, trim: true},
+    city:           {type: String, trim: true},
+    state:          {type: String, trim: true},
+    zip:            {type: Number, trim: true}
   },
   username: {
-    type: String,
-    index: true,
-    trim: true,
-    require: true,
-    unique: true,
+    type:          String,
+    index:         true,
+    trim:          true,
+    require:       true,
+    unique:        true,
   },
   email: {
-    type: String,
-    trim: true,
-    require: true,
-    unique: true,
+    type:         String,
+    trim:         true,
+    require:      true,
+    unique:       true,
     validate: value => {
       if (!validator.isEmail(value)) {
         throw new Error({
@@ -39,52 +39,49 @@ const UserSchema = new mongoose.Schema({
     }
   },
   userImg: {
-    data: Buffer, // using Buffer, which allows us to store our image as data in the form of arrays
-    contentType: String,
+    data:         Buffer, // using Buffer, which allows us to store our image as data in the form of arrays
+    contentType:  String,
   },
-  ipAddress: {
-    type: Array,
+  token: {
+    type:         String,
+    required:     true
   },
-  // token: {
-  //   type: String,
-  //   required: true
-  // },
   role: {
-    type: String,
-    enum:["student", "tutor", "admin"],
-    default: "student"
+    type:          String,
+    enum:          ["student", "tutor", "admin"],
+    default:       "student"
   },
   classes: {
-      type: [mongoose.Schema.Types.ObjectId], ref: "Class"
+      type:        [mongoose.Schema.Types.ObjectId], ref: "Class"
     },
   password: {
-    type: String,
-    bcryptjs: true,
-    require: true,
-    trim: true,
+    type:          String,
+    bcryptjs:      true,
+    require:       true,
+    trim:          true,
   },
-  admin: false,
+  admin:           false,
   created: {
-    type: Date,
-    default: Date.now()
+    type:          Date,
+    default:       Date.now()
   },
   title: {
-    type: String,
-    enum: ["Mr", "Mrs", "Dr.", "Prof."]
+    type:          String,
+    enum:          ["Mr", "Mrs", "Dr.", "Prof."]
   },
   hasActivated: {
-    type: Boolean,
-    default: false
+    type:          Boolean,
+    default:       false
   },
   isDisable: {
-    type: Boolean,
-    default: false
+    type:          Boolean,
+    default:       false
   },
   title: {
-    type: String,
-    enum: ["Mr", "Mrs", "Dr.", "Prof."]
+    type:          String,
+    enum:          ["Mr", "Mrs", "Dr.", "Prof."]
   }
-}, {timestamps: true});
+}, {timestamps:    true});
 
 // virtual userurl
 UserSchema.virtual("url").get(function(){
@@ -146,3 +143,43 @@ module.exports.saveNewClass = function(newClass, callback){
   ).lean();
 };
 
+function validateName() {
+  const name = document.getElementById('name');
+  const re = /^[a-zA-Z]{2,10}$/;
+  if(!re.test(name.value)){
+    name.classList.add('is-invalid');
+  }else {
+    name.classList.remove('is-invalid');
+  }
+  
+  }
+  function validateZip() {
+    const zip = document.getElementById('zip');
+    const re = /^[0-9]{5}(-[0-9]{4})?$/;
+    if(!re.test(zip.value)){
+      zip.classList.add('is-invalid');
+    }else {
+      zip.classList.remove('is-invalid');
+    }
+  
+  }
+  function validateEmail() {
+    const email = document.getElementById('email');
+    const re = /^([a-zA-Z0-9_\-\.]+)@(a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}) $/;
+    if(!re.test(email.value)){
+      email.classList.add('is-invalid');
+    }else {
+      email.classList.remove('is-invalid');
+    }
+  
+  }
+  function validatePhone() {
+    const phone = document.getElementById('phone');
+    const re = /^\(?\d{3}\)?[-. ]?\d{4}[-. ]?\d{4}$/;
+    if(!re.test(phone.value)){
+      phone.classList.add('is-invalid');
+    }else {
+      phone.classList.remove('is-invalid');
+    }  
+  
+  }

@@ -6,13 +6,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const Handlebars = require('handlebars');
+const handler = require('express-handlebars')
 // Only do this, if you have full control over the templates that are executed in the server
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
-const handler = require('express-handlebars');
 const session = require('express-session');
 const passport = require('passport');
 const mongoose = require('mongoose');
-const flash = require("connect-flash")
+const flash = require("connect-flash");
+const methodOverride = require('method-override');
 
 // connection to MongoDB
 const url = process.env.DATABASE_URL;
@@ -50,6 +51,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
 
 
 // express session
@@ -57,7 +59,7 @@ app.use(session({
   secret: ('./node_modules/secret/secret.md'),
   saveUninitialized: true,
   resave: true,
-  cookie: {maxAge: 360000} // 6mins
+  cookie: {maxAge: 720000} // 12mins
 }));
 
 
