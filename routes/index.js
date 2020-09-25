@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator/check");
@@ -13,17 +14,34 @@ router.get("/", function(req, res) {
 
 router.get("/confirmation/:token", async function(req, res, next) {
 })
+=======
+var express = require('express');
+var router = express.Router();
+const { check, validationResult } = require('express-validator/check');
+
+var Message = require('../models/message');
+>>>>>>> b734ba488fa917e0da82c461bc8e01d9bbb01cf4
 
 router.get("/contact", auth.ensureAuthenticated, auth.verifyToken, function(req, res) {
     res.render("contact", {layout: false});
 });
 
+<<<<<<< HEAD
 router.post("/contact", ensureAuthenticated, function(req, res) {
     const name = req.body.name;
     const email = req.body.email;
     const subject = req.body.subject;
     const message = req.body.message;
     const username = req.body.username;
+=======
+router.post('/contact', ensureAuthenticated, function(req, res) {
+    var firstname = req.params.firstname;
+    var lastname = req.params.lastname;
+    var email = req.params.email;
+    var subject = req.params.subject;
+    var message = req.params.message;
+    var username = req.params.username;
+>>>>>>> b734ba488fa917e0da82c461bc8e01d9bbb01cf4
 
 // form validation
   check("name", "character allowed is a-z,A-Z")
@@ -72,8 +90,14 @@ router.post("/contact", ensureAuthenticated, function(req, res) {
         message: message
       });
     } else {
+<<<<<<< HEAD
         const newMessage = new Message({
             name: name,
+=======
+        var newMessage = new Message({
+            firstname: firstname,
+            lastname: lastname,
+>>>>>>> b734ba488fa917e0da82c461bc8e01d9bbb01cf4
             email: email,
             subject: subject,
             message: message,
@@ -87,8 +111,9 @@ router.post("/contact", ensureAuthenticated, function(req, res) {
 
     req.flash()
 
-});
+})
 
+<<<<<<< HEAD
 router.get("/business", function(req, res) {
   Course.getCourses(function(err, foundcourses){
     if(err){
@@ -197,13 +222,57 @@ router.get("/music", function(req, res) {
   res.render("categories/music", {layout: false});
     }
   });
+=======
+router.get('/business', function(req, res) {
+  res.render('categories/business', {layout: false});
+});
+
+router.get('/health-psychology', function(req, res) {
+  res.render('categories/health-psychology', {layout: false});
+});
+
+router.get('/accounting', function(req, res) {
+  res.render('categories/accounting', {layout: false});
+});
+
+router.get('/it-software', function(req, res) {
+  res.render('categories/it-software', {layout: false});
+});
+
+router.get('/art-media', function(req, res) {
+  res.render('categories/art-media', {layout: false});
+});
+
+router.get('/office-productivity', function(req, res) {
+  res.render('categories/office-productivity', {layout: false});
+});
+
+router.get('/language-lifestyle', function(req, res) {
+  res.render('categories/language-lifestyle', {layout: false});
+});
+
+router.get('/web-programming', function(req, res) {
+  res.render('categories/web-programming', {layout: false});
+});
+
+router.get('/design', function(req, res) {
+  res.render('categories/design', {layout: false});
+});
+
+router.get('/music', function(req, res) {
+  res.render('categories/music', {layout: false});
+>>>>>>> b734ba488fa917e0da82c461bc8e01d9bbb01cf4
 });
 
 function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){
       return next();
     }
+<<<<<<< HEAD
     res.redirect("/users/login");
+=======
+    res.redirect('/');
+>>>>>>> b734ba488fa917e0da82c461bc8e01d9bbb01cf4
   };
 
 module.exports = router;

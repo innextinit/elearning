@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+		{{>header}}
+	<body>
+		
+	<div class="fh5co-loader"></div>
+	
+	<div id="page">
+		{{!-- this is the start of nav bar --}}
+		{{>navbar}}
+	{{!--  end of nav bar --}}
+
+        <h2>{{user.username}}'s Courses</h2>
+        {{#if teacher._id}}
+        <table cellspacing="0" cellpadding="0">
+            <thead>
+                <th>Course ID</th>
+                <th>Course Name</th>
+                <th>View Lessons</th>
+                <th>Add Lesson</th>
+            </thead>
+            <tbody>
+                {{#each teacher.Courses}}
+                    <tr>
+                        <td>{{course._id}}</td>
+                        <td>{{course.title}}</td>
+                        <td><a href="/courses/{{course_id}}/lessons">View Lessons</a></td>
+                        <td><a href="/courses/{{course_id}}/lessons/new">Add Lesson</a></td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        {{else}}
+        <p>You have not registed for any courses</p>
+        {{/if}}
+
+		{{>footer}}
+	</body>
+</html>

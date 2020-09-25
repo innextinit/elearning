@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const mongoose =      require("mongoose");
 const fs =            require("fs");
 const multer =        require("multer");
@@ -18,6 +19,15 @@ const UserSchema = new mongoose.Schema({
     state:          {type: String, trim: true},
     zip:            {type: Number, trim: true}
   },
+=======
+var mongoose = require("mongoose");
+var fs = require("fs");
+var multer = require("multer");
+var bcryptjs = require('bcryptjs');
+
+// User Schema (this is the definition of the input the DB will take more like stating the head of table)
+var UserSchema = new mongoose.Schema({
+>>>>>>> b734ba488fa917e0da82c461bc8e01d9bbb01cf4
   username: {
     type:          String,
     index:         true,
@@ -42,6 +52,7 @@ const UserSchema = new mongoose.Schema({
     data:         Buffer, // using Buffer, which allows us to store our image as data in the form of arrays
     contentType:  String,
   },
+<<<<<<< HEAD
   token: {
     type:         String,
     required:     true
@@ -54,12 +65,23 @@ const UserSchema = new mongoose.Schema({
   classes: {
       type:        [mongoose.Schema.Types.ObjectId], ref: "Class"
     },
+=======
+  type: {
+    type:String,
+    require: true
+  },
+  UserImg: {
+    data: Buffer, // using Buffer, which allows us to store our image as data in the form of arrays
+    contentType: String,
+  }, 
+>>>>>>> b734ba488fa917e0da82c461bc8e01d9bbb01cf4
   password: {
     type:          String,
     bcryptjs:      true,
     require:       true,
     trim:          true,
   },
+<<<<<<< HEAD
   admin:           false,
   created: {
     type:          Date,
@@ -86,14 +108,17 @@ const UserSchema = new mongoose.Schema({
 // virtual userurl
 UserSchema.virtual("url").get(function(){
   return '/user/' + this._id;
+=======
+  admin: false,
+>>>>>>> b734ba488fa917e0da82c461bc8e01d9bbb01cf4
 });
 
 // this is to convert this UserSchema in a usable model called User
-const User = mongoose.model("User", UserSchema);
-// then this export the model User so it can be used outside this file.
-module.exports = mongoose.model("User", UserSchema);
+var User = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("User", UserSchema); // then this export the model User so it can be used outside this file.
 
 // To fetch All Useres in the collection Useres in our DB
+<<<<<<< HEAD
 module.exports.getUserByUsername = function(username, callback) {
     const query = {username: username};
     User.findOne(query, callback);
@@ -116,10 +141,34 @@ module.exports.saveUser = function(newUser, callback) {
         newUser.password = hash;
         newUser.save(callback);
         console.log("User is saved");
+=======
+module.exports.getUserByUsername = function (username, callback) {
+    var query = {username: username};
+    User.findOne(query, callback).lean();
+};
+
+// To fatch just a User in the collection Useres in our DB
+module.exports.getUserById = function (id, callback) {
+  User.findById(id, callback).lean();
+};
+
+// save Student
+module.exports.saveStudent = function(newUser, newStudent, callback) {
+    bcryptjs.hash(newUser.password, 15, function(err, hash){
+        if (err) throw err;
+
+        newUser.password = hash;
+        console.log('Student is being svaed');
+        newUser.save(callback);
+        newStudent.save(callback);
+        // async.parallel([newUser.save, newStudent.save], callback);
+>>>>>>> b734ba488fa917e0da82c461bc8e01d9bbb01cf4
         console.log(newUser);
+        console.log(newStudent);
     });
 };
 
+<<<<<<< HEAD
 // Compare Password
 module.exports.comparePassword = function(usersPassword, hash, callback) {
   bcryptjs.compare(usersPassword, hash, function(err, isMatch){
@@ -133,16 +182,24 @@ module.exports.saveNewClass = function(newClass, callback){
   User_username = newClass.User_username;
   class_id = newClass.class_id;
   class_title = newClass.class_title;
+=======
+// save Teacher
+module.exports.saveTeacher = function(newUser, newTeacher, callback) {
+    bcryptjs.hash(newUser.password, 15, function(err, hash){
+        if (err) throw err;
+>>>>>>> b734ba488fa917e0da82c461bc8e01d9bbb01cf4
 
-  const query = {username: User_username};
-  User.findOneAndUpdate(
-    query,
-    {$push: {"classes": {class_id: class_id, class_title: class_title}}},
-    {save: true, upsert: true},
-    callback
-  ).lean();
+        newUser.password = hash;
+        console.log('Teacher is being svaed');
+        newUser.save(callback);
+        newTeacher.save(callback);
+        // async.parallel([newUser.save, newTeacher.save], callback);
+        console.log(newUser);
+        console.log(newTeacher);
+    });
 };
 
+<<<<<<< HEAD
 function validateName() {
   const name = document.getElementById('name');
   const re = /^[a-zA-Z]{2,10}$/;
@@ -183,3 +240,21 @@ function validateName() {
     }  
   
   }
+=======
+// Compare PAssword
+module.exports.comparePassword = function(usersPassword, hash, callback) {
+  bcryptjs.compare(usersPassword, hash, function(err, isMatch){
+    if (err) throw err;
+    callback(null, isMatch);
+  });
+};
+
+// this is for when i am sending POST req to add new class to inculde this part for the classImg upload that is include.
+
+// app.post('/api/photo', function(req, res){
+//     var newClass = new Class();
+//     newClass.classImg.data = fs.readFileSync(req.files.userPhoto.path);
+//     newClass.classImg.contentType = 'image/png';
+//     newClass.save();
+// });
+>>>>>>> b734ba488fa917e0da82c461bc8e01d9bbb01cf4

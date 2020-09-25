@@ -6,9 +6,12 @@
     "start": "node app.js"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@handlebars/allow-prototype-access": "^1.0.3",
     "accesscontrol": "^2.2.1",
     "bcrypt": "^5.0.0",
+=======
+>>>>>>> b734ba488fa917e0da82c461bc8e01d9bbb01cf4
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.4",
