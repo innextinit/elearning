@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+		{{>header}}
+	<body>
+		
+	<div class="fh5co-loader"></div>
+	
+	<div id="page">
+		{{!-- this is the start of nav bar --}}
+	<nav class="fh5co-nav" role="navigation">
+		<div class="top-menu">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-2">
+						<div id="fh5co-logo"><img src="/images/logo.png" width="80px", height="48px"></a></div>
+					</div>
+                    {{#if user}}
+                    <h3>Welcome back, {{user.username}}</h3>
+                    <div class="col-xs-10 text-right menu-1">
+                        <ul>
+                            <li class="active"><a href="/">Home</a></li>
+                            <li class="has-dropdown">
+                                <a href="#">Add Course</a>
+                                <ul class="dropdown">
+                                    <li><a href="/users/upload">Change Picture</a></li>
+                                    <li><a href="/users/edit">Edit Details</a></li>
+                                    <li><a href="/contact">Contact</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-dropdown">
+                                <a href="#">Remove Course</a>
+                                <ul class="dropdown">
+                                    <li><a href="/users/upload">Change Picture</a></li>
+                                    <li><a href="/users/edit">Edit Details</a></li>
+                                    <li><a href="/contact">Contact</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-dropdown">
+                                <a href="#">Tutor</a>
+                                <ul class="dropdown">
+                                    <li><a href="/users/upload">Change Picture</a></li>
+                                    <li><a href="/users/edit">Edit Details</a></li>
+                                    <li><a href="/contact">Contact</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-dropdown">
+                                <a href="#">Student</a>
+                                <ul class="dropdown">
+                                    <li><a href="/users/upload">Change Picture</a></li>
+                                    <li><a href="/users/edit">Edit Details</a></li>
+                                    <li><a href="/contact">Contact</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-dropdown">
+                                <a href="#">Admin</a>
+                                <ul class="dropdown">
+                                    <li><a href="/users/upload">Change Picture</a></li>
+                                    <li><a href="/users/edit">Edit Details</a></li>
+                                    <li><a href="/contact">Contact</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-dropdown">
+                                <a href="#">Account</a>
+                                <ul class="dropdown">
+                                    <li><a href="/users/upload">Change Picture</a></li>
+                                    <li><a href="/users/edit">Edit Details</a></li>
+                                    <li><a href="/contact">Contact</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-dropdown">
+                                <a href="#">Account Security</a>
+                                <ul class="dropdown">
+                                    <li><a href="/users/changepw">Change Password</a></li>
+                                    <li><a href="/users/forgotpw">Forgot Password</a></li>
+                                    <li><a href="/users/2fauth">Enable Two Auth</a></li>
+                                </ul>
+                            </li>
+                            <li class="btn-cta"><a href="/users/logout"><span>Logout</span></a></li>
+                    {{else}}
+                        <div class="col-xs-10 text-right menu-1">
+							<ul>									
+								<li class="active"><a href="/">Home</a></li>
+								<li><a href="/courses">Courses</a></li>
+								<li class="btn-cta"><a href="/users/register"><span>Register</span></a></li>
+								<li class="btn-cta"><a href="/users/login"><span>Login</span></a></li>
+							</ul>
+						</div>
+					{{/if}}
+                        </ul>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</nav> 
+	{{!--  end of nav bar --}}
+
+		{{!-- error message --}}
+		{{{message}}}
+		{{#if errors}}
+			{{#each errors}}
+				<div class="notice error">
+					<i class="icon-remove-sign icon-large"></i>
+					{{msg}}
+					<a href="#close" class="'icon-remove'"></a>
+				</div>
+			{{/each}}
+		{{/if}}
+	{{!-- end of error message --}}
+
+		{{!--  this is the slider bar part --}}
+		{{>index}}
+	{{!--  end of slider bar --}}
+
+		{{!-- this is start of some stand Along Course --}}
+		{{>courses}}
+	{{!-- end of some stand Along Course --}}
+
+		{{!--  this is the start of Course Categories --}}
+		{{>categories}}
+	{{!--  end of Course Categories --}}
+
+
+		{{>footer}}
+	</div>
+	</body>
+</html>

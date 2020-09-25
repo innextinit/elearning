@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+		{{>header}}
+	<body>
+		
+	<div class="fh5co-loader"></div>
+	
+	<div id="page">
+		{{!-- this is the start of nav bar --}}
+		{{>navbar}}
+	{{!--  end of nav bar --}}
+
+    <div id="fh5co-contact">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5 col-md-push-1 animate-box">
+					
+					<div class="fh5co-contact-info">
+						<h3>Contact Information</h3>
+						<ul>
+							<li class="address">5, Street 2, Weco, Off Akure-Ilesha Road,<br> AKure, Ondo State.</li>
+							<li class="phone"><a href="tel://+2348024026601">+234 802 402 6601</a></li>
+							<li class="email"><a href="mailto:info@innextinit.com">info@innextinit.com</a></li>
+							<li class="url"><a href="http://innextinit.com">innnextinit</a></li>
+						</ul>
+					</div>
+
+				</div>
+				<div class="col-md-6 animate-box">
+					<h3>Get In Touch</h3>
+					<form action="/contact" method="POST" enctype="text/plain">
+						<div class="row form-group">
+							<div class="col-md-6">
+								<!-- <label for="fname">Full Name</label> -->
+								<input type="text" name="name" class="form-control" placeholder="Your Full Name" autofocus>
+							</div>
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="email">Email</label> -->
+								<input type="email" name="email" class="form-control" placeholder="Your email address" minlength="8">
+							</div>
+						</div>
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="subject">Subject</label> -->
+								<input type="text" name="subject" class="form-control" placeholder="Your subject of this message">
+							</div>
+						</div>
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="message">Message</label> -->
+								<textarea name="message" cols="30" rows="10" class="form-control" placeholder="Say something about us"></textarea>
+							</div>
+						</div>
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="username">Username</label> -->
+								<input type="hidden" name="username" value="{{user.username}}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<input type="submit" value="Send Message" class="btn btn-primary">
+						</div>
+
+					</form>		
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+		{{>footer}}
+	</body>
+</html>

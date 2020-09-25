@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+		{{>header}}
+	<body>
+		
+	<div class="fh5co-loader"></div>
+	
+	<div id="page">
+		{{!-- this is the start of nav bar --}}
+		{{>navbar}}
+	{{!--  end of nav bar --}}
+
+<div class="col-md-5 col-md-push-1 col-md-pull-1 animate-box">
+
+    <h4>Register</h4>
+    <p>Please register using the form below</p>
+
+    <form class="form animate-box" action="/users/register" method="POST" enctype="multipart/form-data">
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>Full Name</label>
+                <input class="form-control" name="name" type="text" value="{{user.name}}" minlength="4" maxlength="30" autofocus/>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>Stree Address</label>
+                <input class="form-control" name="street_address" type="text" value="{{user.address.street_address}}" minlength="4" maxlength="35" />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>City</label>
+                <input class="form-control" name="city" type="text" value="{{user.address.city}}" minlength="2" maxlength="20" />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>State</label>
+                <input class="form-control" name="state" type="text" value="{{user.address.state}}" minlength="2" maxlength="20" />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>Zip</label>
+                <input class="form-control" name="zip" type="text" value="{{user.address.zip}}" minlength="6" maxlength="10" />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>Email</label>
+                <input class="form-control" name="email" type="email" value="{{user.email}}" minlength="11" maxlength="35" />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label>Username</label>
+                <input class="form-control" name="username" type="text" value="{{user.username}}" minlength="3" maxlength="14" />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <input class="btn btn-primary" name="submit" type="submit" value="Update" />
+        </div>
+        
+    </form>
+
+</div>
+    
+		{{>footer}}
+	</body>
+</html>

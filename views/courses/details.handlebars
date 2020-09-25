@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+		{{>header}}
+	<body>
+		
+	<div class="fh5co-loader"></div>
+	
+	<div id="page">
+		{{!-- this is the start of nav bar --}}
+		{{>navbar}}
+	{{!--  end of nav bar --}}
+
+
+                <div class="col-md-6 animate-box">
+					<div class="course">
+						<a href="#" class="course-img" style="background-image: url(images/project-1.jpg){{course.courseImg.data}};">
+						</a>
+						<div class="desc">
+							<h3><a href="#">{{course.title}}</a></h3>
+                            <p>Instructor : <a href="/teacher/:{{id_teacher}}">{{course.teacher}}</a></p>
+							<p>{{course.description}}</p>
+                            <ul class="alt">
+                                {{#each course.lessons}}
+                                    <li>{{lesson_number}}</li>
+                                    <li>{{lesson_title}}</li>
+                                    <li>{{lesson_body}}</li>
+                                {{/each}}
+                            </ul>
+
+                            <ul>
+                                {{#if user}}
+                                    {{!-- this is to register a course --}}
+                                    <form action='/users/courses/' method="POST" id="courseRegForm">
+                                        <input type="hidden" name="username" value="{{user.username}}">
+                                        <input type="hidden" name="course_id" value="{{course._id}}">
+                                        <input type="hidden" name="course_title" value="{{course.title}}">
+                                        <input type="submit" name="button" value="Register For This Course">
+                                    </form>
+                                {{else}}
+                                    <p><em>Please Login</em></p>
+                                {{/if}}
+                            </ul>
+							
+						</div>
+					</div>
+				</div>
+
+		{{>footer}}
+	</body>
+</html>
